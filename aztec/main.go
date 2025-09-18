@@ -32,12 +32,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	// stakeable, err := matp.GetStakeableAmount(callOpts)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// 	return
-	// }
-	allocation, err := matp.GetAllocation(callOpts) // if you exposed getter
+	allocation, err := matp.GetAllocation(callOpts)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -60,6 +55,12 @@ func main() {
 		return
 	}
 
+	isRevoked, err := matp.GetIsRevoked(callOpts)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	// Assuming staked = stakeable already in staking contract
 	// staked := new(big.Int).Sub(stakeable, claimable)
 
@@ -67,6 +68,7 @@ func main() {
 	// locked.Sub(locked, staked)
 
 	fmt.Println("Token:", token.String())
+	fmt.Println("IsRevoked:", isRevoked)
 	fmt.Println("Beneficiary:", beneficiary)
 	fmt.Println("Claimable:", WeiToETH(claimable))
 	fmt.Println("Claimed:", WeiToETH(claimed))

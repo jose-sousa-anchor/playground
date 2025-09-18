@@ -89,5 +89,18 @@
                 "type": "address"
             }
         ]
+    },
+    {
+        "inputs": [],
+        "stateMutability": "view",
+        "type": "function",
+        "name": "getIsRevoked",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ]
     }
 ]

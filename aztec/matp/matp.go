@@ -31,7 +31,7 @@ var (
 
 // MatpMetaData contains all meta data concerning the Matp contract.
 var MatpMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"function\",\"name\":\"getClaimed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getClaimable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}]},{\"type\":\"function\",\"name\":\"getAllocation\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRevokableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakeableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getToken\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getBeneficiary\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}]}]",
+	ABI: "[{\"type\":\"function\",\"name\":\"getClaimed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getClaimable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}]},{\"type\":\"function\",\"name\":\"getAllocation\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRevokableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakeableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getToken\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getBeneficiary\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}]},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getIsRevoked\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}]}]",
 }
 
 // MatpABI is the input ABI used to generate the binding from.
@@ -302,6 +302,37 @@ func (_Matp *MatpSession) GetClaimed() (*big.Int, error) {
 // Solidity: function getClaimed() view returns(uint256)
 func (_Matp *MatpCallerSession) GetClaimed() (*big.Int, error) {
 	return _Matp.Contract.GetClaimed(&_Matp.CallOpts)
+}
+
+// GetIsRevoked is a free data retrieval call binding the contract method 0x09b058aa.
+//
+// Solidity: function getIsRevoked() view returns(bool)
+func (_Matp *MatpCaller) GetIsRevoked(opts *bind.CallOpts) (bool, error) {
+	var out []interface{}
+	err := _Matp.contract.Call(opts, &out, "getIsRevoked")
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// GetIsRevoked is a free data retrieval call binding the contract method 0x09b058aa.
+//
+// Solidity: function getIsRevoked() view returns(bool)
+func (_Matp *MatpSession) GetIsRevoked() (bool, error) {
+	return _Matp.Contract.GetIsRevoked(&_Matp.CallOpts)
+}
+
+// GetIsRevoked is a free data retrieval call binding the contract method 0x09b058aa.
+//
+// Solidity: function getIsRevoked() view returns(bool)
+func (_Matp *MatpCallerSession) GetIsRevoked() (bool, error) {
+	return _Matp.Contract.GetIsRevoked(&_Matp.CallOpts)
 }
 
 // GetRevokableAmount is a free data retrieval call binding the contract method 0xce828b06.

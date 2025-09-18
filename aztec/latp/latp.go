@@ -31,7 +31,7 @@ var (
 
 // LatpMetaData contains all meta data concerning the Latp contract.
 var LatpMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"function\",\"name\":\"getClaimed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getClaimable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}]},{\"type\":\"function\",\"name\":\"getAllocation\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRevokableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakeableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"}]",
+	ABI: "[{\"type\":\"function\",\"name\":\"getClaimed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getClaimable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}]},{\"type\":\"function\",\"name\":\"getAllocation\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRevokableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakeableAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getToken\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"inputs\":[],\"stateMutability\":\"view\",\"type\":\"function\",\"name\":\"getBeneficiary\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}]}]",
 }
 
 // LatpABI is the input ABI used to generate the binding from.
@@ -211,6 +211,37 @@ func (_Latp *LatpCallerSession) GetAllocation() (*big.Int, error) {
 	return _Latp.Contract.GetAllocation(&_Latp.CallOpts)
 }
 
+// GetBeneficiary is a free data retrieval call binding the contract method 0x565a2e2c.
+//
+// Solidity: function getBeneficiary() view returns(address)
+func (_Latp *LatpCaller) GetBeneficiary(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Latp.contract.Call(opts, &out, "getBeneficiary")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// GetBeneficiary is a free data retrieval call binding the contract method 0x565a2e2c.
+//
+// Solidity: function getBeneficiary() view returns(address)
+func (_Latp *LatpSession) GetBeneficiary() (common.Address, error) {
+	return _Latp.Contract.GetBeneficiary(&_Latp.CallOpts)
+}
+
+// GetBeneficiary is a free data retrieval call binding the contract method 0x565a2e2c.
+//
+// Solidity: function getBeneficiary() view returns(address)
+func (_Latp *LatpCallerSession) GetBeneficiary() (common.Address, error) {
+	return _Latp.Contract.GetBeneficiary(&_Latp.CallOpts)
+}
+
 // GetClaimable is a free data retrieval call binding the contract method 0xee28b744.
 //
 // Solidity: function getClaimable() view returns(uint256)
@@ -333,4 +364,35 @@ func (_Latp *LatpSession) GetStakeableAmount() (*big.Int, error) {
 // Solidity: function getStakeableAmount() view returns(uint256)
 func (_Latp *LatpCallerSession) GetStakeableAmount() (*big.Int, error) {
 	return _Latp.Contract.GetStakeableAmount(&_Latp.CallOpts)
+}
+
+// GetToken is a free data retrieval call binding the contract method 0x21df0da7.
+//
+// Solidity: function getToken() view returns(address)
+func (_Latp *LatpCaller) GetToken(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Latp.contract.Call(opts, &out, "getToken")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// GetToken is a free data retrieval call binding the contract method 0x21df0da7.
+//
+// Solidity: function getToken() view returns(address)
+func (_Latp *LatpSession) GetToken() (common.Address, error) {
+	return _Latp.Contract.GetToken(&_Latp.CallOpts)
+}
+
+// GetToken is a free data retrieval call binding the contract method 0x21df0da7.
+//
+// Solidity: function getToken() view returns(address)
+func (_Latp *LatpCallerSession) GetToken() (common.Address, error) {
+	return _Latp.Contract.GetToken(&_Latp.CallOpts)
 }
