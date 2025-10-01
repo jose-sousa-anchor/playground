@@ -61,11 +61,7 @@ func main() {
 		return
 	}
 
-	// Assuming staked = stakeable already in staking contract
-	// staked := new(big.Int).Sub(stakeable, claimable)
-
 	locked := new(big.Int).Sub(allocation, claimable)
-	// locked.Sub(locked, staked)
 
 	fmt.Println("Token:", token.String())
 	fmt.Println("IsRevoked:", isRevoked)
