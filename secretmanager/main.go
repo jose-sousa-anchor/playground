@@ -27,7 +27,8 @@ func main() {
 
 	// To get project run `gcloud config get-value project`
 	// To get secret id run `gcloud secrets list`
-	secretValue, err := GetSecret("development-204920", "default-galaxy_digital_rsa_private_key", "latest")
+	secretValue, err := GetSecret("development-204920",
+		"default-galaxy_digital_rsa_private_key", "latest")
 	if err != nil {
 		log.Fatalf("Failed to get secret: %v", err)
 	}
@@ -44,7 +45,9 @@ func main() {
 func GetSecret(projectID, secretID, version string) (string, error) {
 	ctx := context.Background()
 
-	// Build the request
+	// projects/development-204920/secrets/default-galaxy_digital_rsa_private_key/versions/latest
+	fmt.Println("Name of the secret:", fmt.Sprintf("projects/%s/secrets/%s/versions/%s", projectID, secretID, version))
+	fmt.Println("projects/development-204920/secrets/default-galaxy_digital_rsa_private_key/versions/latest")
 	accessRequest := &secretmanagerpb.AccessSecretVersionRequest{
 		Name: fmt.Sprintf("projects/%s/secrets/%s/versions/%s", projectID, secretID, version),
 	}
