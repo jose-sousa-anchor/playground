@@ -1,0 +1,209 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// -----------------------------
+// Milestone 0: processJob function
+// -----------------------------
+func processJob(items []string) map[int][]string {
+	result := make(map[int][]string)
+	for _, s := range items {
+		l := len(s)
+		result[l] = append(result[l], s)
+	}
+	return result
+}
+
+// -----------------------------
+// Milestone 2: Priority types
+// -----------------------------
+
+// Priority levels for jobs
+type Priority int
+
+const (
+	LOW Priority = iota
+	NORMAL
+	HIGH
+)
+
+func (p Priority) String() string {
+	switch p {
+	case HIGH:
+		return "HIGH"
+	case NORMAL:
+		return "NORMAL"
+	default:
+		return "LOW"
+	}
+}
+
+// Job represents a job with name, payload, and priority
+type Job struct {
+	Name     string
+	Payload  []string
+	Priority Priority
+}
+
+// -----------------------------
+// Milestone 3: Async Processing
+// -----------------------------
+
+// Scheduler is a priority-based scheduler with async processing
+type Scheduler struct {
+	mu          sync.Mutex
+	highQueue   []*Job
+	normalQueue []*Job
+	lowQueue    []*Job
+	jobs        map[string]*Job
+
+	// async runner controls
+	stopCh  chan struct{}
+	running bool
+	wg      sync.WaitGroup
+}
+
+// NewScheduler creates a new async scheduler
+func NewScheduler() *Scheduler {
+	return &Scheduler{
+		highQueue:   make([]*Job, 0),
+		normalQueue: make([]*Job, 0),
+		lowQueue:    make([]*Job, 0),
+		jobs:        make(map[string]*Job),
+		stopCh:      make(chan struct{}),
+	}
+}
+
+// Schedule adds a job with a priority. Returns error if job name already exists.
+func (s *Scheduler) Schedule(name string, payload []string, pr Priority) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if _, ok := s.jobs[name]; ok {
+		return fmt.Errorf("job %s already exists", name)
+	}
+	job := &Job{
+		Name:     name,
+		Payload:  payload,
+		Priority: pr,
+	}
+
+	// Add to appropriate priority queue
+	switch pr {
+	case HIGH:
+		s.highQueue = append(s.highQueue, job)
+	case NORMAL:
+		s.normalQueue = append(s.normalQueue, job)
+	default:
+		s.lowQueue = append(s.lowQueue, job)
+	}
+	s.jobs[name] = job
+	return nil
+}
+
+// popNextLocked pops the next job according to priority order.
+// MUST be called with s.mu held.
+func (s *Scheduler) popNextLocked() *Job {
+	if len(s.highQueue) > 0 {
+		job := s.highQueue[0]
+		s.highQueue = s.highQueue[1:]
+		delete(s.jobs, job.Name)
+		return job
+	}
+	if len(s.normalQueue) > 0 {
+		job := s.normalQueue[0]
+		s.normalQueue = s.normalQueue[1:]
+		delete(s.jobs, job.Name)
+		return job
+	}
+	if len(s.lowQueue) > 0 {
+		job := s.lowQueue[0]
+		s.lowQueue = s.lowQueue[1:]
+		delete(s.jobs, job.Name)
+		return job
+	}
+	return nil
+}
+
+// StartAsync starts the asynchronous runner that processes one job per second and prints the result.
+func (s *Scheduler) StartAsync() {
+	s.mu.Lock()
+	if s.running {
+		s.mu.Unlock()
+		return
+	}
+	s.running = true
+	s.mu.Unlock()
+
+	s.wg.Add(1)
+	go func() {
+		defer s.wg.Done()
+		ticker := time.NewTicker(1 * time.Second)
+		defer ticker.Stop()
+
+		for {
+			select {
+			case <-s.stopCh:
+				return
+			case <-ticker.C:
+				s.mu.Lock()
+				job := s.popNextLocked()
+				s.mu.Unlock()
+
+				if job != nil {
+					printJobProcessing(job)
+				}
+			}
+		}
+	}()
+}
+
+// StopAsync stops the async runner and waits for it to exit
+func (s *Scheduler) StopAsync() {
+	s.mu.Lock()
+	if !s.running {
+		s.mu.Unlock()
+		return
+	}
+	s.running = false
+	s.mu.Unlock()
+
+	close(s.stopCh)
+	s.wg.Wait()
+
+	// Recreate stopCh so StartAsync can be called again if needed
+	s.stopCh = make(chan struct{})
+}
+
+// helper to print job processing
+func printJobProcessing(job *Job) {
+	fmt.Printf("Processing job '%s' (priority=%s) ...\n", job.Name, job.Priority.String())
+	res := processJob(job.Payload)
+	fmt.Printf("Result for job '%s': %v\n", job.Name, res)
+}
+
+func main() {
+	fmt.Println("=== Milestone 3: Async Processing (1s interval) ===")
+	s := NewScheduler()
+
+	// Schedule jobs
+	_ = s.Schedule("async1", []string{"a", "bb", "ccc"}, NORMAL)
+	_ = s.Schedule("async2", []string{"alpha", "beta"}, HIGH)
+	_ = s.Schedule("async3", []string{"x", "y"}, LOW)
+	_ = s.Schedule("async4", []string{"foo", "bar"}, HIGH)
+
+	fmt.Println("\nStarting async runner (processes 1 job per second)...")
+	s.StartAsync()
+
+	// Let it run for a few seconds
+	fmt.Println("Running for 5 seconds...")
+	time.Sleep(5 * time.Second)
+
+	// Stop the runner
+	fmt.Println("\nStopping async runner.")
+	s.StopAsync()
+}

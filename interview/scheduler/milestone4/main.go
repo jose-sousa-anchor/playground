@@ -8,7 +8,7 @@ import (
 )
 
 // -----------------------------
-// Warmup: processJob
+// Milestone 0: processJob function
 // -----------------------------
 func processJob(items []string) map[int][]string {
 	result := make(map[int][]string)
@@ -20,8 +20,10 @@ func processJob(items []string) map[int][]string {
 }
 
 // -----------------------------
-// Scheduler types & priorities
+// Milestone 2: Priority types
 // -----------------------------
+
+// Priority levels for jobs
 type Priority int
 
 const (
@@ -41,6 +43,7 @@ func (p Priority) String() string {
 	}
 }
 
+// Job represents a job with name, payload, and priority
 type Job struct {
 	Name     string
 	Payload  []string
@@ -48,17 +51,16 @@ type Job struct {
 }
 
 // -----------------------------
-// Scheduler
+// Milestone 4: ProcessNow (Skip the Line)
 // -----------------------------
+
+// Scheduler is the complete scheduler with ProcessNow functionality
 type Scheduler struct {
-	mu sync.Mutex
-	// three queues for priorities (front = index 0)
+	mu          sync.Mutex
 	highQueue   []*Job
 	normalQueue []*Job
 	lowQueue    []*Job
-
-	// map for quick existence checks (optional)
-	jobs map[string]*Job
+	jobs        map[string]*Job
 
 	// async runner controls
 	immediateCh chan *Job // push here to be processed next (ProcessNow)
@@ -67,7 +69,7 @@ type Scheduler struct {
 	wg          sync.WaitGroup
 }
 
-// NewScheduler creates the scheduler
+// NewScheduler creates a new scheduler with ProcessNow capability
 func NewScheduler() *Scheduler {
 	return &Scheduler{
 		highQueue:   make([]*Job, 0),
@@ -79,10 +81,11 @@ func NewScheduler() *Scheduler {
 	}
 }
 
-// Schedule inserts a new job. Returns error if job name already exists.
+// Schedule adds a job with a priority. Returns error if job name already exists.
 func (s *Scheduler) Schedule(name string, payload []string, pr Priority) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
 	if _, ok := s.jobs[name]; ok {
 		return fmt.Errorf("job %s already exists", name)
 	}
@@ -91,6 +94,8 @@ func (s *Scheduler) Schedule(name string, payload []string, pr Priority) error {
 		Payload:  payload,
 		Priority: pr,
 	}
+
+	// Add to appropriate priority queue
 	switch pr {
 	case HIGH:
 		s.highQueue = append(s.highQueue, job)
@@ -103,9 +108,9 @@ func (s *Scheduler) Schedule(name string, payload []string, pr Priority) error {
 	return nil
 }
 
-// helper to pop next job according to priority order. Returns nil if no jobs.
-func (s *Scheduler) popNextJobLocked() *Job {
-	// MUST be called with s.mu held
+// popNextLocked pops the next job according to priority order.
+// MUST be called with s.mu held.
+func (s *Scheduler) popNextLocked() *Job {
 	if len(s.highQueue) > 0 {
 		job := s.highQueue[0]
 		s.highQueue = s.highQueue[1:]
@@ -127,28 +132,7 @@ func (s *Scheduler) popNextJobLocked() *Job {
 	return nil
 }
 
-// ProcessAll synchronously processes all scheduled jobs and returns map[name] -> result.
-// It drains current queues at the time of call.
-func (s *Scheduler) ProcessAll() (map[string]map[int][]string, error) {
-	results := make(map[string]map[int][]string)
-
-	for {
-		s.mu.Lock()
-		job := s.popNextJobLocked()
-		s.mu.Unlock()
-
-		if job == nil {
-			break
-		}
-		res := processJob(job.Payload)
-		results[job.Name] = res
-	}
-
-	return results, nil
-}
-
 // StartAsync starts the asynchronous runner that processes one job per second and prints the result.
-// It's safe to call StartAsync multiple times: only first call starts the runner.
 func (s *Scheduler) StartAsync() {
 	s.mu.Lock()
 	if s.running {
@@ -169,23 +153,23 @@ func (s *Scheduler) StartAsync() {
 			case <-s.stopCh:
 				return
 			case immediateJob := <-s.immediateCh:
-				// process immediate job now (highest priority)
+				// Process immediate job now (highest priority)
 				printJobProcessing(immediateJob)
 			case <-ticker.C:
-				// pop next job by priority
+				// Pop next job by priority
 				s.mu.Lock()
-				job := s.popNextJobLocked()
+				job := s.popNextLocked()
 				s.mu.Unlock()
+
 				if job != nil {
 					printJobProcessing(job)
 				}
-				// else: nothing to do this tick
 			}
 		}
 	}()
 }
 
-// StopAsync stops the async runner (blocks until runner goroutine exits)
+// StopAsync stops the async runner and waits for it to exit
 func (s *Scheduler) StopAsync() {
 	s.mu.Lock()
 	if !s.running {
@@ -198,12 +182,13 @@ func (s *Scheduler) StopAsync() {
 	close(s.stopCh)
 	s.wg.Wait()
 
-	// recreate channels so StartAsync can be called again if desired
+	// Recreate channels so StartAsync can be called again if needed
 	s.immediateCh = make(chan *Job, 10)
 	s.stopCh = make(chan struct{})
 }
 
-// ProcessNow finds a scheduled job by name, removes it from its queue and schedules it to be processed immediately.
+// ProcessNow finds a scheduled job by name, removes it from its queue,
+// and schedules it to be processed immediately.
 // Returns error if job not found.
 func (s *Scheduler) ProcessNow(name string) error {
 	s.mu.Lock()
@@ -214,13 +199,12 @@ func (s *Scheduler) ProcessNow(name string) error {
 		return fmt.Errorf("job %s not found", name)
 	}
 
-	// Remove job from its queue (linear scan). After removal, delete from jobs map.
+	// Remove job from its queue (linear scan)
 	removed := false
 	switch job.Priority {
 	case HIGH:
 		for i := 0; i < len(s.highQueue); i++ {
 			if s.highQueue[i].Name == name {
-				// remove element i
 				s.highQueue = append(s.highQueue[:i], s.highQueue[i+1:]...)
 				removed = true
 				break
@@ -246,18 +230,18 @@ func (s *Scheduler) ProcessNow(name string) error {
 	if !removed {
 		return errors.New("inconsistent state: job found in map but not in queue")
 	}
-	// remove from map so scheduler doesn't double-process it
+
+	// Remove from map so scheduler doesn't double-process it
 	delete(s.jobs, name)
 
-	// push to immediate channel (non-blocking if buffer available)
+	// Push to immediate channel (non-blocking if buffer available)
 	select {
 	case s.immediateCh <- job:
-		// scheduled to run immediately (or next select if currently processing)
+		// Scheduled to run immediately
 		return nil
 	default:
-		// immediateCh full - processed synchronously in caller to avoid losing job
+		// immediateCh full - process synchronously to avoid losing job
 		s.mu.Unlock()
-		// process outside lock
 		printJobProcessing(job)
 		s.mu.Lock()
 		return nil
@@ -271,53 +255,40 @@ func printJobProcessing(job *Job) {
 	fmt.Printf("Result for job '%s': %v\n", job.Name, res)
 }
 
-// -----------------------------
-// Example usage / tests in main()
-// -----------------------------
 func main() {
-	fmt.Println("=== Warmup: processJob ===")
-	ex1 := []string{"apple", "banana", "kiwi", "grape", "fig", "pear", "peach"}
-	fmt.Println("Input:", ex1)
-	fmt.Println("Grouped by length:", processJob(ex1))
-
-	fmt.Println("\n=== Scheduler demo ===")
+	fmt.Println("=== Milestone 4: ProcessNow (Skip the Line) ===")
 	s := NewScheduler()
-	// Schedule three jobs
-	_ = s.Schedule("job1", []string{"apple", "grape"}, NORMAL)
-	_ = s.Schedule("job2", []string{"one", "two", "six"}, HIGH)
-	_ = s.Schedule("job3", []string{"ABCDEFGH", "12345678"}, LOW)
-	_ = s.Schedule("job4", []string{}, NORMAL) // empty payload handled
 
-	// ProcessAll synchronously
-	fmt.Println("\n-- ProcessAll (synchronous) --")
-	results, _ := s.ProcessAll()
-	for name, res := range results {
-		fmt.Printf("Sync result: %s -> %v\n", name, res)
-	}
-
-	// Schedule more jobs for async demo
+	// Schedule jobs
 	_ = s.Schedule("async1", []string{"a", "bb", "ccc"}, NORMAL)
 	_ = s.Schedule("async2", []string{"alpha", "beta"}, HIGH)
 	_ = s.Schedule("async3", []string{"x", "y"}, LOW)
 
 	// Start async runner
-	fmt.Println("\n-- Start async runner (1s tick) --")
+	fmt.Println("\nStarting async runner...")
 	s.StartAsync()
 
-	// Wait 500ms and then request processNow for async3
+	// Wait 500ms and then request ProcessNow for async3 (LOW priority job)
 	time.Sleep(500 * time.Millisecond)
-	fmt.Println("Requesting ProcessNow(async3)")
+	fmt.Println("\n>>> Requesting ProcessNow(async3) - skipping the line! <<<")
 	if err := s.ProcessNow("async3"); err != nil {
 		fmt.Println("ProcessNow error:", err)
 	}
 
-	// Also schedule another high-priority job while running
+	// Schedule another high-priority job while running
+	time.Sleep(1 * time.Second)
 	_ = s.Schedule("urgent", []string{"urgent1", "urgent22"}, HIGH)
 
-	// Let runner run for a few seconds
-	time.Sleep(5 * time.Second)
+	// Let runner run for a few more seconds
+	time.Sleep(4 * time.Second)
 
-	// stop runner and exit
+	// Stop runner
 	fmt.Println("\nStopping async runner.")
 	s.StopAsync()
+
+	// Test ProcessNow error case
+	fmt.Println("\nTrying ProcessNow on non-existent job:")
+	if err := s.ProcessNow("nonexistent"); err != nil {
+		fmt.Println("Error:", err)
+	}
 }
