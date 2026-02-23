@@ -1,0 +1,179 @@
+@startuml Dynamic Asset Addition Flow
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 10
+
+title Dynamic Asset Addition Flow - Current System
+
+actor "Admin/User" as Admin
+participant "GraphQL API" as GraphQL
+participant "Organization\nService" as OrgService
+database "Special Org\n(ASSET_SUPPORT_V2)" as SpecialOrg
+participant "Approval\nWorkflow" as Approval
+participant "HSM Queue\nPublisher" as HSMPublisher
+participant "HSM" as HSM
+participant "Asset Registry\nCron (60s)" as Cron
+database "Asset Registry\nDatabase" as DB
+participant "Asset Types\nClient (10s)" as Client
+database "In-Memory\nCache" as Cache
+participant "Services\n(Consumers)" as Services
+
+== Asset Addition Phase ==
+
+Admin -> GraphQL: requestAddAssetSupport mutation\n(networkID, assetTypeID, tokenType,\nname, decimals, etc.)
+activate GraphQL
+
+GraphQL -> OrgService: Create AssetSupportAddChange
+activate OrgService
+
+OrgService -> SpecialOrg: Apply change to\nSpecial Organization
+note right
+  Change adds new AssetConfig to
+  org.AnchorageData.AssetConfigs[]
+
+  Requires HSM signing:
+  GetSkipHSMSigning() = false
+  BioChallengeRequired() = true
+end note
+activate SpecialOrg
+
+SpecialOrg --> OrgService: Organization updated\n(unsigned)
+deactivate SpecialOrg
+
+OrgService --> GraphQL: Operation created
+deactivate OrgService
+
+GraphQL --> Admin: Operation ID returned
+deactivate GraphQL
+
+== Approval & Signing Phase ==
+
+Admin -> Approval: Approve operation\n(biometric challenge)
+activate Approval
+
+Approval -> OrgService: Trigger OrgChangeSignSendV2
+activate OrgService
+
+OrgService -> SpecialOrg: Get Special Org\nfor ASSET_SUPPORT_V2 purpose
+activate SpecialOrg
+SpecialOrg --> OrgService: HSMSignedOrganization
+deactivate SpecialOrg
+
+OrgService -> HSMPublisher: UpdateAndSignOrganizationChanges\n(operation, endorsements,\nencrypted org key, special org)
+activate HSMPublisher
+
+HSMPublisher -> HSM: Publish to HSM queue\n(SignOrganizationRequest)
+note right
+  Request includes:
+  - OperationID
+  - KeyBlob
+  - PrevOrganization
+  - NewOrganization with AssetConfigs
+  - Endorsements
+  - SpecialOrgs map
+end note
+activate HSM
+
+HSM -> HSM: Sign new organization\nstate with updated\nAssetConfigs
+HSM --> HSMPublisher: Signed organization
+deactivate HSM
+
+HSMPublisher --> OrgService: MessageID
+deactivate HSMPublisher
+
+OrgService -> SpecialOrg: Store signed\norganization
+activate SpecialOrg
+SpecialOrg --> OrgService: Stored
+deactivate SpecialOrg
+
+OrgService --> Approval: Operation completed
+deactivate OrgService
+
+Approval --> Admin: Asset approved & signed
+deactivate Approval
+
+== Asset Registry Sync Phase ==
+
+loop Every 60 seconds
+  Cron -> OrgService: GetOrganizationForPurpose\n(ASSET_SUPPORT_V2)
+  activate Cron
+  activate OrgService
+
+  OrgService -> SpecialOrg: Retrieve signed\nspecial organization
+  activate SpecialOrg
+  SpecialOrg --> OrgService: HSMSignedOrganization\nwith all AssetConfigs
+  deactivate SpecialOrg
+
+  OrgService --> Cron: Organization with\nAssetConfigs[]
+  deactivate OrgService
+
+  Cron -> DB: Upsert asset configs\n(name, abbreviation,\ndecimals, networkID,\ntokenType, etc.)
+  activate DB
+  note right
+    For each AssetConfig:
+    - If exists: UPDATE if changed
+    - If new: INSERT and create enablement
+
+    Also registers globally via
+    assettype.RegisterToken()
+  end note
+  DB --> Cron: Assets stored
+  deactivate DB
+
+  deactivate Cron
+end
+
+== Client Cache Population Phase ==
+
+loop Every 10 seconds
+  Client -> Cron: ListAssetTypes gRPC\n(OnlyXpress: true)
+  activate Client
+  activate Cron
+
+  Cron -> DB: Query supported assets
+  activate DB
+  DB --> Cron: Asset list
+  deactivate DB
+
+  Cron --> Client: ListAssetTypesResponse\n(AssetTypes[])
+  deactivate Cron
+
+  Client -> Client: Register each asset\nvia RegisterToken()
+
+  Client -> Cache: Store in assetTypesMap\n(assetTypeID -> RegisteredAsset)
+  activate Cache
+  Cache --> Client: Stored
+  deactivate Cache
+
+  Client -> Services: Trigger callbacks\nfor new assets
+  activate Services
+  note right
+    Services can register callbacks
+    to be notified when new
+    assets are discovered
+  end note
+  Services --> Client: Acknowledged
+  deactivate Services
+
+  deactivate Client
+end
+
+== Asset Usage Phase ==
+
+Services -> Client: Get(assetTypeID) or List()
+activate Services
+activate Client
+
+Client -> Cache: Load from\nassetTypesMap
+activate Cache
+Cache --> Client: AssetInfo
+deactivate Cache
+
+Client --> Services: Asset information\n(name, decimals,\nnetworkID, etc.)
+deactivate Client
+
+Services -> Services: Use asset for\ntransactions, balances,\nvalidations, etc.
+deactivate Services
+
+@enduml

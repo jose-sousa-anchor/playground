@@ -1,0 +1,72 @@
+```mermaid
+sequenceDiagram
+    title Asset Registry Tagging - Simplified Flow
+
+    box LightBlue Tag Definition
+        actor Engineer
+        participant PR as PR Review
+    end
+
+    box LightGreen Tag Management
+        actor Admin as Ops/Admin
+        participant Retool as Retool UI
+        participant Service as Asset Registry<br/>Service
+        participant TagDB as asset_tag<br/>Table
+    end
+
+    box LightPink Client Services
+        participant Client as AssetTypes<br/>Client (10s)
+        participant Cache as Tags Cache
+        participant Services
+    end
+
+    rect rgb(240, 240, 255)
+        Note over Engineer,PR: 1. Tag Definition (One-time)
+
+        Engineer->>PR: Create new tag definition<br/>(REBASING, STABLE, etc.)
+        Note right of PR: Tag must have:<br/>- Name (e.g., "REBASING")<br/>- Description<br/>- Behavioral implications
+        PR->>Engineer: Merged & deployed ✓
+    end
+
+    rect rgb(240, 255, 240)
+        Note over Admin,TagDB: 2. Apply Tags to Assets
+
+        Admin->>Retool: Select asset tags
+        Retool->>Service: SetAssetTags gRPC<br/>(assetTypeID, tags[])
+        Service->>TagDB: Insert asset_tag records<br/>(asset_id, tag)
+        Note right of TagDB: Unique constraint on<br/>(asset_id, tag) pair<br/><br/>Audit trail via entaudit
+        TagDB->>Service: Tags stored ✓
+        Service->>Retool: Return current tags
+        Retool->>Admin: Success confirmation
+    end
+
+    rect rgb(255, 240, 240)
+        Note over Client,Cache: 3. Client Cache Population
+
+        activate Client
+        activate Service
+        Client->>Service: ListTagsWithAssetTypeIDs gRPC<br/>(every 10s)
+        Service->>TagDB: Query all asset_tag records
+        TagDB->>Service: Return tag -> assetIDs map
+        Service->>Client: Map[tag][]assetTypeIDs
+        deactivate Service
+
+        Client->>Cache: Update tagsCache<br/>(sync.Map)
+        Note right of Cache: Cache structure:<br/>tagsCache[tag] = []assetTypeIDs<br/><br/>Example:<br/>tagsCache["REBASING"] =<br/>["ethereum:steth", "ethereum:reth"]
+        Cache->>Client: Tags cached ✓
+        deactivate Client
+    end
+
+    rect rgb(255, 255, 240)
+        Note over Services,Cache: 4. Service Usage
+
+        activate Services
+        activate Client
+        Services->>Client: GetByTags("REBASING")
+        Client->>Cache: Lookup tag in tagsCache
+        Cache->>Client: Return []assetTypeIDs
+        Client->>Services: List of rebasing assets
+        deactivate Client
+        deactivate Services
+    end
+```

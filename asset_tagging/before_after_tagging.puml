@@ -1,0 +1,75 @@
+@startuml Before vs After Tagging
+!theme plain
+skinparam backgroundColor #FFFFFF
+
+title Asset Discovery: Before vs After Tagging
+
+package "WITHOUT TAGGING (Current)" {
+  actor "Service" as Service1
+  participant "Code" as Code1
+  database "Asset Cache" as Cache1
+
+  Service1 -> Code1: Need rebasing logic
+  activate Service1
+  activate Code1
+
+  Code1 -> Code1: Hardcode asset IDs
+  note right
+    if assetID == "ethereum:steth" ||
+       assetID == "ethereum:reth" ||
+       assetID == "ethereum:cbeth" {
+      // Rebasing logic
+    }
+
+    **Problems:**
+    ❌ Must update code for new assets
+    ❌ Easy to miss assets
+    ❌ Duplicated across services
+    ❌ No discovery mechanism
+  end note
+
+  Code1 -> Cache1: Get("ethereum:steth")
+  Cache1 --> Code1: AssetInfo
+  Code1 -> Cache1: Get("ethereum:reth")
+  Cache1 --> Code1: AssetInfo
+  Code1 --> Service1: Apply rebasing logic
+  deactivate Code1
+  deactivate Service1
+}
+
+package "WITH TAGGING (Future)" {
+  actor "Service" as Service2
+  participant "Client" as Client2
+  database "Tags Cache" as TagCache2
+  database "Asset Cache" as Cache2
+
+  Service2 -> Client2: GetByTags("REBASING")
+  activate Service2
+  activate Client2
+
+  Client2 -> TagCache2: Lookup "REBASING"
+  activate TagCache2
+  TagCache2 --> Client2: [all rebasing asset IDs]
+  deactivate TagCache2
+
+  Client2 -> Cache2: Get asset info for each
+  activate Cache2
+  Cache2 --> Client2: []AssetInfo
+  deactivate Cache2
+
+  Client2 --> Service2: All rebasing assets
+  deactivate Client2
+
+  Service2 -> Service2: Apply rebasing logic
+  note right
+    **Benefits:**
+    ✅ No code changes needed
+    ✅ Automatically includes new assets
+    ✅ Single source of truth
+    ✅ Works across all services
+    ✅ Discoverable and queryable
+  end note
+  deactivate Service2
+}
+
+@enduml

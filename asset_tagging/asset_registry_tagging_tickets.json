@@ -1,0 +1,458 @@
+=== Fetching Project: Asset Registry Tagging ===
+
+Project found: Asset Registry Tagging (ID: d4caeba1-8192-48a7-ac21-c07b53ecf60a)
+
+=== Fetching Issues for Project: Asset Registry Tagging ===
+{
+  "project": {
+    "id": "d4caeba1-8192-48a7-ac21-c07b53ecf60a",
+    "issues": {
+      "nodes": [
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-16T18:41:05.654Z",
+          "description": "# Description\n\nMove database access out of the tags domain logic into a dbprovider layer and adopt consumer-defined interfaces, aligning with patterns used in subaccount and custody services.\n\n# **Acceptance Criteria**\n\n**Acceptance Criteria:**\n\n* No database/ent logic remains in `logic.go`\n* Interfaces defined by consumers, not providers\n* Data provider returns domain types\n* No changes to existing behaviour\n* Tests cases are pretty much the same and continue to pass\n\n# **Dependencies**\n\nInclude any assets / links / references that this Issue requires in order to be accomplished\n\nEx: \"logo.png\" attached to this ticket",
+          "id": "5a4ec514-4827-439d-9928-c8209d6e63bb",
+          "identifier": "PROC-4520",
+          "priority": 0,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Apply Go-idiomatic interface patterns and separates domain from data access in Asset Registry Tags [EXTRA]",
+          "updatedAt": "2026-02-17T10:48:33.398Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4520/apply-go-idiomatic-interface-patterns-and-separates-domain-from-data"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-05T11:49:36.278Z",
+          "description": "# Description\n\nAs a client of the asset registry service (including Retool UI), I should be able to fetch the list of all available tag definitions so that I can present users with valid tag options dynamically without hardcoding tags.\n\n# **Acceptance Criteria**\n\n* Proto definition for `ListTags` RPC exists in `assetsupport.proto`\n* `ListTagsRequest` message exists (empty message)\n* `ListTagsResponse` message returns list of `TagDefinition`\n* `TagDefinition` message includes:\n  * `~~tag~~`~~ (string) - Tag identifier (e.g., \"REBASING\")~~\n  * `description` (string) - Human-readable description\n  * `~~owner~~`~~ (string) - Team responsible (e.g., \"Protocols\")~~\n* gRPC handler exists in `internal/grpcserver/assetsupport_server.go`\n* Handler reads tag definitions from `internal/tags/tags.go`\n* Handler returns all tags defined in `tags.AllTags` map\n* Response is sorted alphabetically by tag name\n* Unit tests exist for handler\n* Integration test exists verifying correct tags are returned (nice to have)\n* gRPC server test exists covering the RPC\n* Handler can be tested manually with grpcurl\n* Proto code generation completes successfully\n\n# **Dependencies**\n\nNone",
+          "id": "90183edb-c87b-42db-b524-dabb40ca256f",
+          "identifier": "PROC-4466",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Add ListTags gRPC endpoint",
+          "updatedAt": "2026-02-13T16:32:41.675Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4466/add-listtags-grpc-endpoint"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-05T11:43:15.127Z",
+          "description": "# Description\n\nAs a product manager or operations team member, I should be able to manage asset tag associations through a Retool interface so that I can add or remove tags from assets without writing code or using CLI tools.\n\nRetool to update: [https://retoolv3.anchorage-development.com/apps/58d84db4-acc0-11ef-8293-8bca805579cf/Asset%20types](\u003chttps://retoolv3.anchorage-development.com/apps/58d84db4-acc0-11ef-8293-8bca805579cf/Asset%2520types\u003e)\n\n# **Acceptance Criteria**\n\n* Reuse the assets listing page in Retool (use the edit box to manage tags)\n  * Note: Edit box is currently not in use\n* Page shows searchable list of all assets with their current tags\n* User can select an asset from the list or search by asset ID/name\n* ~~For selected asset, UI displays:~~\n  * ~~Asset details (ID, name, network, token type) (nice to have)~~\n  * Current tags with visual badges\n  * Available tags to add (from tag definitions)\n* \"Add Tag\" functionality:\n  * Dropdown/multi-select to choose tag(s) from available tags\n  * \"Add\" button calls `AddTagsToAsset` gRPC endpoint\n  * Success message shows updated tag list\n  * Error handling with user-friendly messages\n* \"Remove Tag\" functionality:\n  * Each tag badge has \"X\" remove button\n  * Confirmation dialog before removal\n  * \"Remove\" action calls `RemoveTagsFromAsset` gRPC endpoint\n  * Success message shows updated tag list\n  * Error handling with user-friendly messages\n* ~~Authorization is enforced (must be in ~~`~~asset-tag-editors~~`~~ group)~~\n* ~~UI shows permission denied error for unauthorized users~~\n* Tag changes are logged and visible in audit trail\n* Manual testing checklist completed with screenshots\n* UI is accessible via standard Retool deployment URL\n\n# **Dependencies**\n\nNone",
+          "id": "254af91d-fd1b-4558-bc83-031d1f34a3a3",
+          "identifier": "PROC-4465",
+          "priority": 2,
+          "state": {
+            "name": "In Progress",
+            "type": "started"
+          },
+          "title": "Create Retool UI for tag management",
+          "updatedAt": "2026-02-13T16:13:38.456Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4465/create-retool-ui-for-tag-management"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T19:10:33.375Z",
+          "description": "# Description\n\nAs a developer or operator working with the tag system, I should be able to read comprehensive documentation so that I understand how to use, maintain, and deploy the tag feature.\n\n# **Acceptance Criteria**\n\n* Service README includes tag system overview\n* Tag addition process is documented (how to add new tags via PR)\n* Client usage guide exists with code examples\n* Operations runbook exists (how to manage tags, troubleshoot issues)\n* Database schema documentation exists (tables, indexes, relationships)\n* Migration guide exists for service owners adopting tags\n* API documentation is updated for all new RPCs\n* Troubleshooting guide exists for common issues\n* Deployment plan exists (staging rollout, production rollout)\n* All documentation is reviewed by team\n\n# **Dependencies**\n\nNone",
+          "id": "a2176e72-5fb1-4627-91a5-d8a8ac9a9296",
+          "identifier": "PROC-4463",
+          "priority": 3,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Create documentation and deployment plan",
+          "updatedAt": "2026-02-05T14:47:54.616Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4463/create-documentation-and-deployment-plan"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T19:09:43.791Z",
+          "description": "# Description\n\nAs a developer deploying the tag feature, I should be able to run comprehensive smoke tests so that I can verify the entire system works correctly in a production-like environment.\n\n# **Acceptance Criteria**\n\n* Smoke test file exists in `internal/integration/smoketests/`\n* `SMOKE_TESTS` file is updated with tag test scenarios\n* Test covers complete tag lifecycle (add tags → query → mutate → verify)\n* Test runs successfully with `make run-lite` environment\n* Test verifies all client methods work with real service\n* Test verifies tags persist across service restart\n* Test covers error scenarios (invalid tags, authorization failures)\n* Test verifies performance with 100+ assets\n* Manual test checklist is documented\n* All manual tests pass successfully\n* Service starts without errors\n* Database queries use indexes (verified with EXPLAIN ANALYZE)\n* No memory leaks detected\n* No performance regressions detected\n\n# **Dependencies**\n\nNone",
+          "id": "fbff26c2-700a-4917-9f70-cbce3d3053a8",
+          "identifier": "PROC-4462",
+          "priority": 3,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Create end-to-end smoke tests (low prio)",
+          "updatedAt": "2026-02-06T12:25:16.491Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4462/create-end-to-end-smoke-tests-low-prio"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T19:08:36.871Z",
+          "description": "# Description\n\nAs a developer releasing the tag mutation feature, I should be able to run end-to-end integration tests so that I can verify the entire mutation flow works correctly from gRPC to database.\n\n# **Acceptance Criteria**\n\n* Integration test exists for AddTagsToAsset RPC\n* Integration test exists for RemoveTagsFromAsset RPC\n* Integration test exists for SetAssetTags RPC\n* Test covers full mutation lifecycle (add → remove → set)\n* Tests use real PostgreSQL database\n* Tests verify tags persist correctly in database\n* Tests verify error scenarios (invalid tags, non-existent assets)\n* Tests verify audit trail records exist in database\n* Tests are added to CI pipeline\n* All tests pass consistently\n\n# **Dependencies**\n\nNone",
+          "id": "7b10bde7-be16-455a-bf58-82554c9d29fc",
+          "identifier": "PROC-4461",
+          "priority": 3,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Create integration tests for mutations (low prio)",
+          "updatedAt": "2026-02-06T12:25:18.806Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4461/create-integration-tests-for-mutations-low-prio"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T19:07:51.207Z",
+          "description": "# Description\n\nAs a gRPC client of the asset registry service, I should be able to call tag mutation RPCs so that I can modify asset tags over the network with proper error handling and logging.\n\n# **Acceptance Criteria**\n\n* `AddTagsToAsset()` handler exists in `internal/grpcserver/assetsupport_server.go`\n* `RemoveTagsFromAsset()` handler exists\n* Each handler calls corresponding service layer method\n* Each handler returns current tags after mutation\n* Invalid tags return `InvalidArgument` status code\n* Non-existent assets return `NotFound` status code\n* Empty tags list returns `InvalidArgument` status code\n* Database errors return `Internal` status code\n* Each mutation is logged for audit purposes (maybe duplicated already have ent audit)\n* gRPC server tests exist covering all cases\n* Ensure only EM google group is allowed to use this API (TBD check what this group is)\n\n# **Dependencies**\n\nNone",
+          "id": "c95840ee-9562-4dbe-b15b-f1415c230540",
+          "identifier": "PROC-4460",
+          "priority": 2,
+          "state": {
+            "name": "In Progress",
+            "type": "started"
+          },
+          "title": "Implement tag mutation gRPC handlers",
+          "updatedAt": "2026-02-17T22:33:46.426Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4460/implement-tag-mutation-grpc-handlers"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T19:06:57.815Z",
+          "description": "# Description\n\nAs a consumer of the AssetSupport service layer, I should be able to add, remove, or set tags on assets so that I can modify asset tags with proper validation and transaction support.\n\n# **Acceptance Criteria**\n\n* `AddTags(ctx, assetID, tags)` method exists on AssetSupport interface\n* `RemoveTags(ctx, assetID, tags)` method exists\n* AddTags inserts new asset_tag rows, ignoring duplicates (idempotent)\n* RemoveTags deletes specified asset_tag rows (**should we soft delete?**)\n* All methods validate tags before mutations\n* All methods verify asset exists before mutations\n* Invalid tags return clear error messages\n* Non-existent assets return clear error messages\n* Unit tests exist with mocked database\n* Audit trail captures all tag changes (via entaudit)\n\n# **Dependencies**\n\nNone",
+          "id": "16921a78-cc63-461e-b090-43dbe07ea4f4",
+          "identifier": "PROC-4459",
+          "priority": 2,
+          "state": {
+            "name": "In Review",
+            "type": "started"
+          },
+          "title": "Implement tag mutation service logic",
+          "updatedAt": "2026-02-18T17:41:18.338Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4459/implement-tag-mutation-service-logic"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T19:06:14.439Z",
+          "description": "# Description\n\nAs a client of the asset registry service, I should be able to call gRPC methods to modify asset tags so that I can add and remove.\n\n# **Acceptance Criteria**\n\n* `AddTagsToAsset` RPC definition exists in `assettags.proto`\n* `RemoveTagsFromAsset` RPC definition exists\n* Each RPC has corresponding Request and Response messages\n* Response messages include current tags after mutation\n* Proto code generation completes successfully\n* All services compile after proto update\n* No breaking changes to existing RPCs\n\n# **Dependencies**\n\nNone",
+          "id": "c02a56b4-f731-4c82-a0ce-8fd00e6bdc4d",
+          "identifier": "PROC-4458",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Add tag mutation proto definitions",
+          "updatedAt": "2026-02-18T12:13:24.502Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4458/add-tag-mutation-proto-definitions"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T19:05:36.814Z",
+          "description": "# Description\n\nI should be able to read comprehensive tests and examples so that I understand how to use the client methods correctly.\n\n# **Acceptance Criteria**\n\n* `asset_types_client_test.go` includes tests for all new methods\n* Tests verify GetTags lazy loading behavior\n* Tests verify GetAssetsByTag methods\n* Code comments include example usage for each method\n* Tests verify backward compatibility (existing usage still works)\n* Documentation explains caching behavior\n* Troubleshooting guide exists for common issues (if applicable)\n\n# **Dependencies**\n\nNone",
+          "id": "83b777bd-d2ca-4a13-9ad6-04f42d447bcf",
+          "identifier": "PROC-4457",
+          "priority": 3,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Add client tests and documentation",
+          "updatedAt": "2026-02-06T14:41:08.261Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4457/add-client-tests-and-documentation"
+        },
+        {
+          "assignee": {
+            "email": "jose.sousa@anchorlabs.com",
+            "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+            "name": "José Sousa"
+          },
+          "createdAt": "2026-02-04T19:03:52.396Z",
+          "description": "# Description\n\nAs a consumer of the AssetTypes client, I should be able to query assets by tag(s) so that I can discover assets with specific characteristics using the client library.\n\n# **Acceptance Criteria**\n\n* `GetByTags(ctx, tags)` method is implemented (OR logic)\n* Empty tags input returns clear error\n* Invalid tags return error from server\n* No matching assets returns empty array (not error)\n* Unit tests exist with mocked gRPC client\n* Integration tests exist with real service (nice to have)\n\n# **Dependencies**\n\nNone",
+          "id": "6d90325a-9aa3-4102-954a-3442cc32c142",
+          "identifier": "PROC-4456",
+          "priority": 2,
+          "state": {
+            "name": "In Progress",
+            "type": "started"
+          },
+          "title": "Implement `GetByTags` methods in client",
+          "updatedAt": "2026-02-18T14:39:36.918Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4456/implement-getbytags-methods-in-client"
+        },
+        {
+          "assignee": {
+            "email": "jose.sousa@anchorlabs.com",
+            "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+            "name": "José Sousa"
+          },
+          "createdAt": "2026-02-04T19:03:15.430Z",
+          "description": "# Description\n\nAs a consumer of the AssetTypes client, I should be able to call get all the assets having a specific tag.\n\n# **Acceptance Criteria**\n\n* `tagsCache sync.Map` field exists in `assetTypesClient` struct\n* This map should have the `tag` as the key and the list of `assetTypeIDs` as the value\n* This map should be loaded by default on client bootstrap\n* Load tags map via `ListTagsWithAssetTypeIDs` RPC\n* Method populates cache with RPC results\n* Method handles RPC errors gracefully\n* All tags in cache returns result with no RPC call\n* Unit tests exist with mocked gRPC client\n* Thread-safety tests exist (concurrent `ListTagsWithAssetTypeIDs` calls)\n* Ensure we don't break the current assettype lookups (suggestion -\u003e FF)\n\n# **Dependencies**\n\nNone",
+          "id": "9263492c-e58a-4171-90cb-46e7c1a1e753",
+          "identifier": "PROC-4455",
+          "priority": 2,
+          "state": {
+            "name": "In Review",
+            "type": "started"
+          },
+          "title": "Load tags in client",
+          "updatedAt": "2026-02-18T14:39:48.079Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4455/load-tags-in-client"
+        },
+        {
+          "assignee": {
+            "email": "jose.sousa@anchorlabs.com",
+            "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+            "name": "José Sousa"
+          },
+          "createdAt": "2026-02-04T18:56:51.574Z",
+          "description": "# Description\n\nAs a consumer of the AssetTypes client library, I should be able to see tag query methods in the interface so that I know which tag operations are available.\n\n# **Acceptance Criteria**\n\n* `GetTagsByAssetTypeIDs(ctx, assetIDs ...assettype.ID)` method exists in `AssetTypesReader` interface\n* `GetAssetsTypeIdsByTags(ctx, tag ...string)` method exists in interface  (OR logic)\n* Interface documentation explains each method's purpose\n* All interface implementations compile successfully\n\n# **Dependencies**\n\nNone",
+          "id": "35e0fd47-53f6-4421-8242-706e21a31835",
+          "identifier": "PROC-4454",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Add tag methods to AssetTypesReader interface",
+          "updatedAt": "2026-02-16T17:14:11.503Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4454/add-tag-methods-to-assettypesreader-interface"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T18:56:11.915Z",
+          "description": "# Description\n\nAs a developer releasing the tag query feature, I should be able to run end-to-end integration tests so that I can verify the entire query flow works correctly from gRPC to database.\n\n# **Acceptance Criteria**\n\n* Integration test file exists in `internal/integration/`\n* Test covers GetAssetTags RPC end-to-end flow\n* Test covers GetAssetsByTags RPC with OR logic (ANY mode)\n* Test covers GetAssetsByTags RPC with AND logic (ALL mode)\n* Tests use real PostgreSQL database\n* Tests cover error cases (invalid tags, missing assets)\n* Tests verify performance with 100+ assets\n* Tests are added to CI pipeline\n* All tests pass consistently\n\n# **Dependencies**\n\nNone",
+          "id": "f3a33033-b3ae-4a62-b956-27e964a6d547",
+          "identifier": "PROC-4453",
+          "priority": 3,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Create integration tests for read path (low prio)",
+          "updatedAt": "2026-02-06T12:25:25.122Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4453/create-integration-tests-for-read-path-low-prio"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T18:55:03.227Z",
+          "description": "# Description\n\nI should be able to access the AssetTag repository within transactions so that tag operations can be performed atomically with other database operations.\n\n# **Acceptance Criteria**\n\n* `AssetTag` repository is accessible via `UnitOfWorkRepository`\n* `repos.AssetTag` can be used within `uow.Do()` transaction\n* AssetTag operations support transactions (commits and rollbacks work)\n* Unit tests verify repository access within transactions\n* AssetTag queries work correctly within transaction context\n\n# **Dependencies**\n\nNone",
+          "id": "33a4ef44-83c2-49db-a9ed-cc428c9ed7b9",
+          "identifier": "PROC-4452",
+          "priority": 4,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Add AssetTag to UnitOfWork repository (low prio)",
+          "updatedAt": "2026-02-06T12:01:32.589Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4452/add-assettag-to-unitofwork-repository-low-prio"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T18:54:12.633Z",
+          "description": "# Description\n\nAs a gRPC client of the asset registry service, I should be able to call GetAssetsByTags RPC to find assets matching tag criteria so that I can discover assets with specific characteristics.\n\n# **Acceptance Criteria**\n\n* `GetAssetsTypeIDsByTag()` handler exists in `internal/grpcserver/assetsupport_server.go`\n* Handler accepts `GetAssetsIDsByTagsRequest` with tags and match_mode\n* Handler converts `TAG_MATCH_MODE_ANY` to matchAll=false\n* Handler converts `TAG_MATCH_MODE_ALL` to matchAll=true\n* Handler calls service layer `GetAssetsTypeIDsByTags()` method\n* Handler returns `GetAssetsTypeIDsByTagResponse` with list of asset IDs\n* Empty tags list returns `InvalidArgument` status code\n* Invalid tags return `InvalidArgument` status code\n* No matching assets returns empty array (not error)\n* gRPC server tests exist covering all cases\n\n# **Dependencies**\n\nNone",
+          "id": "286195ce-8f50-450c-ac85-99ae901ba54f",
+          "identifier": "PROC-4451",
+          "priority": 2,
+          "state": {
+            "name": "Canceled",
+            "type": "canceled"
+          },
+          "title": "Implement `GetAssetsTypeIDsByTag` gRPC handler",
+          "updatedAt": "2026-02-11T17:13:07.602Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4451/implement-getassetstypeidsbytag-grpc-handler"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T18:51:32.562Z",
+          "description": "# Description\n\nAs a gRPC client of the asset registry service, I should be able to call ListTagsWithAssetTypeIDs to retrieve all asset type IDs by tags\n\n# **Acceptance Criteria**\n\n* ListTagsWithAssetTypeIDs() handler exists in `internal/grpcserver/assettagging_server.go`\n* Handler returns ListTagsWithAssetTypeIDsResponse with map of tag to asset type ID list\n* Empty request returns `InvalidArgument` status code\n* Database errors return `Internal` status code\n* Non-existent assets return empty tag arrays (not errors)\n* gRPC server tests exist covering all cases\n* Handler can be tested manually with grpcurl\n\n# **Dependencies**\n\nNone",
+          "id": "9dff98f4-4002-42c7-8187-0a7dd6db3032",
+          "identifier": "PROC-4450",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Implement ListTagsWithAssetTypeIDs gRPC handler",
+          "updatedAt": "2026-02-13T12:03:45.757Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4450/implement-listtagswithassettypeids-grpc-handler"
+        },
+        {
+          "assignee": null,
+          "createdAt": "2026-02-04T18:50:58.329Z",
+          "description": "# Description\n\nAs a consumer of the AssetSupport service layer, I should be able to query assets by tag(s) with OR/AND logic so that I can find all assets matching specific tag criteria.\n\n# **Acceptance Criteria**\n\n* `GetAssetsTypeIDsByTag(ctx, tag ...string)` method exists on AssetSupport interface\n* GetAssetsByTag validates tag before querying\n* GetAssetsByTags with matchAll=false uses OR logic (assets with ANY tag)\n* GetAssetsByTags with matchAll=true uses AND logic (assets with ALL tags)\n* Methods return `[]assettype.ID` with matching assets\n* Invalid tags return clear error messages\n* Methods return empty array when no assets match\n* Unit tests exist with mocked database\n\n# **Dependencies**\n\nNone",
+          "id": "c5803333-f1b2-4af3-9c50-4f07f8285e62",
+          "identifier": "PROC-4449",
+          "priority": 2,
+          "state": {
+            "name": "Canceled",
+            "type": "canceled"
+          },
+          "title": "Implement `GetAssetsTypeIDsByTag` service logic",
+          "updatedAt": "2026-02-11T17:13:07.653Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4449/implement-getassetstypeidsbytag-service-logic"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T18:49:16.218Z",
+          "description": "# Description\n\nAs a consumer of the AssetSupport service layer, I should be able to retrieve all tags and respective asset type Ids in a single call so that I can efficiently fetch tag information from the database.\n\n# **Acceptance Criteria**\n\n* ListTagsWithAssetTypeIDs`(ctx)` method exists on AssetTagging interface\n* Method returns `map[string][]assettype.ID` with tags grouped by asset\n* Method returns empty array for assets with no tags\n* Method returns empty array for non-existent assets\n* Method handles empty input (returns empty map)\n* Unit tests exist with mocked database (\u003e80% coverage)\n* Integration tests exist with a real PostgreSQL database (nice to have)\n\n# **Dependencies**\n\nNone",
+          "id": "37bbaae0-ef2c-4a5f-ad5d-2b909fa23434",
+          "identifier": "PROC-4448",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Implement ListTagsWithAssetTypeIDs service logic",
+          "updatedAt": "2026-02-12T16:39:27.655Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4448/implement-listtagswithassettypeids-service-logic"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T18:47:12.288Z",
+          "description": "# Description\n\nWe should be able to have all tag-related dependencies properly injected so that the service compiles and starts without errors.\n\n# **Acceptance Criteria**\n\n* Wire configuration in `internal/cmd/assetregistry/wire.go` is updated\n* AssetSupport logic has access to necessary dependencies\n* Wire code generation completes successfully\n* Service compiles without errors\n* Service starts successfully in local environment\n* No dependency injection errors in logs\n\n# **Dependencies**\n\nNone",
+          "id": "28cbdfa3-2c69-45d5-87ea-22450227a979",
+          "identifier": "PROC-4447",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Setup Wire dependency injection",
+          "updatedAt": "2026-02-13T12:05:36.787Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4447/setup-wire-dependency-injection"
+        },
+        {
+          "assignee": {
+            "email": "jose.sousa@anchorlabs.com",
+            "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+            "name": "José Sousa"
+          },
+          "createdAt": "2026-02-04T18:46:15.299Z",
+          "description": "# Description\n\nI should be able to load the`asset_tag` table into memory so that I can efficiently retrieve tags and assets without writing repetitive Ent queries.\n\n# **Acceptance Criteria**\n\n* `ListTagsWithAssetTypeIDs() map[string][]assetTypeID` helper returns map of tag to assettypeIds\n* Unit tests exist using in-memory SQLite\n* Integration tests exist using PostgreSQL (nice to have)\n* Database queries use indexes (can be double checked with EXPLAIN ANALYZE) (nice to have)\n* Queries handle empty inputs gracefully\n\n# **Dependencies**\n\nNone",
+          "id": "8de9fe06-d4ca-474e-96ca-d14c19f18c19",
+          "identifier": "PROC-4446",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Add Ent query helper for asset_tag",
+          "updatedAt": "2026-02-11T18:13:39.364Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4446/add-ent-query-helper-for-asset-tag"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T18:44:12.650Z",
+          "description": "# Description\n\nAs a client of the asset registry service, I should be able to call gRPC methods to query tags for assets and query assets by tags so that I can retrieve tag information via the service API.\n\n# **Acceptance Criteria**\n\n* `GetTagsByAssetTypeIDs` RPC definition exists in `assetsupport.proto`\n* `GetTagsByAssetTypeIDsRequest` message accepts repeated `asset_type_ids`\n* `GetTagsByAssetTypeIDsResponse` message returns map of asset_id to tags\n* `GetAssetIDsByTags` RPC definition exists\n* `GetAssetsIDsByTagsRequest` message accepts repeated tags\n* `GetAssetsIDsByTagsResponse` message returns list of matching asset IDs\n* Proto code generation completes successfully\n* All services compile after proto update\n* No breaking changes to existing RPCs\n\n# **Dependencies**\n\nNone",
+          "id": "78107eb2-4b4c-4078-8b12-37ac4621a42b",
+          "identifier": "PROC-4445",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Add protobuf definitions for tag queries",
+          "updatedAt": "2026-02-11T16:03:41.142Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4445/add-protobuf-definitions-for-tag-queries"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "createdAt": "2026-02-04T18:42:32.888Z",
+          "description": "# Description\n\nWe should be able to store tags in a separate `asset_tag` table with proper relationships and indexes so that tag queries are performant and data integrity is maintained.\n\n# **Acceptance Criteria**\n\n* `internal/dataprovider/dbprovider/schema/asset_tag.go` file exists\n* Composite primary key index on `(tag, asset_type_id)` exists\n* Index on `asset_type_id` field exists for fast asset-based queries\n* Ent code generation completes without errors\n* Generated code compiles successfully\n* Migration SQL file is generated using Ent migration tools\n\n# **Dependencies**\n\nNone",
+          "id": "051914c6-f726-477b-b612-66653bc4356f",
+          "identifier": "PROC-4444",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Create asset_tag Ent schema",
+          "updatedAt": "2026-02-09T16:05:45.184Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4444/create-asset-tag-ent-schema"
+        },
+        {
+          "assignee": {
+            "email": "jose.sousa@anchorlabs.com",
+            "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+            "name": "José Sousa"
+          },
+          "createdAt": "2026-02-04T18:41:23.932Z",
+          "description": "# Description\n\nHave the ability to define and validate asset tags programmatically so that only approved tags can be applied to assets.\n\n# **Acceptance Criteria**\n\n* The `internal/tags/tags.go` file exists with `Tag` type and constants\n* `TagRebasing` and `TagStable` constants are defined\n* `Validate(tag string) error` function validates individual tags\n* `ValidateAll(tags []string) error` function validates multiple tags\n* `List() []Tag` function returns all valid tags\n* `GetMetadata(tag Tag) (TagMetadata, bool)` function returns tag metadata\n* Unit tests exist with \u003e90% coverage\n* Invalid tags return clear error messages\n\n# **Dependencies**\n\nNone",
+          "id": "5da5bc2b-9b26-4d56-8e83-69679460ff19",
+          "identifier": "PROC-4443",
+          "priority": 2,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Create tag system",
+          "updatedAt": "2026-02-09T15:25:24.275Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4443/create-tag-system"
+        },
+        {
+          "assignee": {
+            "email": "alex.otsu@anchorlabs.com",
+            "id": "bfe28d6c-35fd-4526-a959-bdedb3d45074",
+            "name": "Alex Otsu"
+          },
+          "createdAt": "2026-01-30T09:58:14.686Z",
+          "description": "Might be covered by [Asset Registry Tagging](https://linear.app/anchorlabs/project/asset-registry-tagging-6ebebe183aa8) \n\nCreate documentation within the Asset Registry context explaining how other teams can extend asset information with new properties. Clarify the supported mechanisms, constraints, and examples so that teams can safely add additional fields to assets when needed.\n\n### Notes\n\n* See slack conversation attached\n* NOT generic key-value",
+          "id": "c2922ea4-2747-4e6e-b7a5-eddf9477fe43",
+          "identifier": "PROC-4426",
+          "priority": 3,
+          "state": {
+            "name": "Todo",
+            "type": "unstarted"
+          },
+          "title": "Document how teams can extend asset information properties",
+          "updatedAt": "2026-02-02T15:21:39.513Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4426/document-how-teams-can-extend-asset-information-properties"
+        }
+      ]
+    },
+    "name": "Asset Registry Tagging"
+  }
+}

@@ -1,0 +1,85 @@
+@startuml Dynamic Asset Architecture
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Dynamic Asset System - Architecture Overview
+
+package "Asset Addition & Approval" {
+  [GraphQL API] as GraphQL
+  [Organization Service] as OrgService
+  [Approval Workflow] as Approval
+}
+
+package "HSM Layer" {
+  [HSM Queue Publisher] as HSMPub
+  [HSM] as HSM
+}
+
+database "Special Organization\n(ASSET_SUPPORT_V2)" as SpecialOrg {
+  frame "AnchorageData" {
+    [AssetConfigs[]]
+  }
+}
+
+package "Asset Registry Service" {
+  [Cron Job\n(60s interval)] as Cron
+  database "SupportedAsset\nTable" as DB
+  [AssetSupport\ngRPC API] as API
+}
+
+package "Client Layer" {
+  [AssetTypes Client\n(10s refresh)] as Client
+  database "In-Memory Cache\nassetTypesMap" as Cache
+}
+
+cloud "Consumer Services" as Services
+
+' Flow connections
+GraphQL -down-> OrgService: 1. requestAddAssetSupport\nmutation
+OrgService -down-> SpecialOrg: 2. Apply change to\nSpecial Org
+Approval -down-> HSMPub: 3. Approved operation\nwith endorsements
+HSMPub -right-> HSM: 4. Sign organization\nwith new AssetConfigs
+HSM -down-> SpecialOrg: 5. Store signed\norganization
+
+Cron -up-> OrgService: 6. GetOrganizationForPurpose\n(every 60s)
+OrgService -up-> SpecialOrg: 6a. Retrieve signed org
+Cron -down-> DB: 7. Upsert assets\nfrom AssetConfigs
+
+Client -up-> API: 8. ListAssetTypes gRPC\n(every 10s)
+API -up-> DB: 8a. Query assets
+Client -down-> Cache: 9. Store in memory\n(assetTypeID -> Info)
+
+Services -up-> Client: 10. Get(id) / List()\nfor asset info
+Client -up-> Cache: 10a. Load from cache
+
+note right of SpecialOrg
+  **Special Organization**
+  - Dedicated org for asset configs
+  - Purpose: ASSET_SUPPORT_V2
+  - Contains AssetConfigs array
+  - HSM-signed for authenticity
+end note
+
+note right of DB
+  **SupportedAsset Table**
+  - id (assetTypeID)
+  - name
+  - abbreviation
+  - decimals
+  - networkID
+  - tokenType
+  - onChainIdentifier
+  - isXpress
+end note
+
+note right of Cache
+  **Cache Structure**
+  sync.Map[assetTypeID]
+  -> RegisteredAsset {
+    AssetInfo
+    RegistrationSource
+  }
+end note
+
+@enduml

@@ -1,0 +1,97 @@
+@startuml Asset Tagging Architecture
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+title Asset Registry Tagging - Architecture
+
+package "Tag Definition Layer" {
+  [Tag Definitions\n(Code)] as TagDef
+  note right of TagDef
+    Tags defined in code:
+    - REBASING
+    - STABLE
+    - PRIVACY
+    - DEPRECATED
+    - etc.
+  end note
+}
+
+package "Tag Management Layer" {
+  [Retool UI] as Retool
+  [Asset Registry\nService] as Service
+}
+
+database "Asset Registry Database" {
+  [supported_asset\ntable] as AssetTable
+  [asset_tag\ntable] as TagTable
+
+  TagTable -right-> AssetTable: foreign key\n(asset_id)
+}
+
+package "gRPC APIs" {
+  [ListTags] as ListTagsAPI
+  [ListTagsWithAssetTypeIDs] as ListWithIDsAPI
+  [AddTagsToAsset] as AddAPI
+  [RemoveTagsFromAsset] as RemoveAPI
+}
+
+package "Client Layer" {
+  [AssetTypes Client] as Client
+  database "In-Memory Caches" as Caches {
+    [assetTypesMap\nsync.Map] as AssetCache
+    [tagsCache\nsync.Map] as TagCache
+  }
+}
+
+cloud "Consumer Services" as Consumers
+
+' Connections
+TagDef -down-> Service: Available tags
+Retool -down-> AddAPI: Manage tags
+Retool -down-> RemoveAPI
+
+Service -down-> TagTable: CRUD operations
+Service -down-> AssetTable: Read assets
+
+ListTagsAPI -up-> TagDef: Read definitions
+ListWithIDsAPI -up-> TagTable: Query mappings
+AddAPI -up-> TagTable: Insert records
+RemoveAPI -up-> TagTable: Delete records
+
+Client -up-> ListWithIDsAPI: Refresh every 10s
+Client -down-> AssetCache: Store assets
+Client -down-> TagCache: Store tag mappings
+
+Consumers -up-> Client: GetByTags()\nGet()\nList()
+Client -up-> AssetCache: Lookup
+Client -up-> TagCache: Lookup
+
+note right of TagTable
+  **asset_tag table**
+  - id (UUID)
+  - asset_id (FK)
+  - tag (string)
+  - created_at
+  - updated_at
+
+  Unique: (asset_id, tag)
+  Index: asset_id
+  Index: tag
+end note
+
+note right of Caches
+  **tagsCache structure:**
+  Map[tag][]assetTypeID
+
+  Example:
+  "REBASING" -> [
+    "ethereum:steth",
+    "ethereum:reth"
+  ]
+
+  **assetTypesMap:**
+  Map[assetTypeID]AssetInfo
+end note
+
+@enduml

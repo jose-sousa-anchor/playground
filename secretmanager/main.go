@@ -10,21 +10,24 @@ import (
 )
 
 func main() {
+	// Check Luganodes API key
 	secretValue, err := secrets.GetSecret(
-		"development-204920",
-		"default-galaxy_digital_rsa_private_key",
+		"staging-191601",
+		"staging-luganodes-eth-staking-api-key",
 		"latest",
 	)
 	if err != nil {
 		log.Fatalf("Failed to get secret: %v", err)
 	}
-	fmt.Printf("Retrieved secret: %s\n", secretValue)
+	fmt.Printf("Retrieved Luganodes API key (first 20 chars): %s...\n", truncate(secretValue, 20))
+	fmt.Printf("Full secret length: %d bytes\n", len(secretValue))
+}
 
-	rsaKey, err := parseRSAPrivateKeyFromString(secretValue)
-	if err != nil {
-		log.Fatalf("Failed to parse RSA private key: %v", err)
+func truncate(s string, maxLen int) string {
+	if len(s) <= maxLen {
+		return s
 	}
-	fmt.Printf("Parsed RSA Private Key: %v\n", rsaKey)
+	return s[:maxLen]
 }
 
 // ParseRSAPrivateKeyFromString parses a PEM-encoded RSA private key (PKCS#1 or PKCS#8).

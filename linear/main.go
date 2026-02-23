@@ -23,18 +23,18 @@ func main() {
 	// Create Linear client
 	client := NewLinearClient(apiKey)
 
-	// Find the "Asset Registry Tagging" project
+	// Fetch Asset Registry Tagging project
 	projectName := "Asset Registry Tagging"
-	fmt.Printf("=== Searching for Project: %s ===\n", projectName)
+	fmt.Printf("=== Fetching Project: %s ===\n", projectName)
 	projectData, err := client.GetProjectByName(projectName)
 	if err != nil {
-		log.Fatalf("Failed to find project: %v", err)
+		log.Fatalf("Failed to get project: %v", err)
 	}
 
-	// Extract project ID from the response
+	// Extract project ID
 	projects, ok := projectData["projects"].(map[string]interface{})
 	if !ok {
-		log.Fatalf("Unexpected project data format")
+		log.Fatalf("Invalid project data structure")
 	}
 
 	nodes, ok := projects["nodes"].([]interface{})
@@ -44,17 +44,16 @@ func main() {
 
 	project := nodes[0].(map[string]interface{})
 	projectID := project["id"].(string)
+	fmt.Printf("\nProject found: %s (ID: %s)\n\n", project["name"], projectID)
 
-	fmt.Printf("Found project: %s (ID: %s)\n\n", project["name"], projectID)
-
-	// Get all issues for the project
-	fmt.Println("=== Getting Issues for Asset Registry Tagging ===")
-	issues, err := client.GetProjectIssues(projectID)
+	// Fetch all issues for this project
+	fmt.Printf("=== Fetching Issues for Project: %s ===\n", projectName)
+	issuesData, err := client.GetProjectIssues(projectID)
 	if err != nil {
 		log.Fatalf("Failed to get project issues: %v", err)
 	}
 
-	printJSON(issues)
+	printJSON(issuesData)
 }
 
 // printJSON pretty prints JSON data

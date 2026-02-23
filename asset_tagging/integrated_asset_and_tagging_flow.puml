@@ -1,0 +1,97 @@
+@startuml Integrated Asset + Tagging Flow
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam BoxPadding 20
+
+title Complete System: Dynamic Assets + Tagging
+
+box "Asset Addition" #LightBlue
+  actor "Admin" as Admin1
+  participant "GraphQL API" as API
+  participant "Organization\nService" as Org
+end box
+
+box "Storage" #LightGreen
+  database "Special Org\n(ASSET_SUPPORT_V2)" as SpecialOrg
+  participant "HSM" as HSM
+end box
+
+box "Asset Registry Service" #LightYellow
+  participant "Asset Cron\n(60s)" as AssetCron
+  database "supported_asset" as AssetDB
+  participant "Asset Registry\nService" as Service
+  database "asset_tag" as TagDB
+end box
+
+box "Tag Management" #Lavender
+  actor "Ops" as Admin2
+  participant "Retool UI" as Retool
+end box
+
+box "Client Layer" #LightPink
+  participant "AssetTypes\nClient (10s)" as Client
+  database "Asset Cache" as AssetCache
+  database "Tags Cache" as TagCache
+  participant "Services" as Services
+end box
+
+== Step 1: Add New Asset (Existing Flow) ==
+
+Admin1 -> API: Add Asset Support
+API -> Org: Create org change
+Org -> HSM: Sign organization
+HSM --> SpecialOrg: Store signed org ✓
+
+== Step 2: Asset Registry Sync (Existing) ==
+
+AssetCron -> SpecialOrg: Get special org (every 60s)
+SpecialOrg --> AssetCron: Return AssetConfigs
+AssetCron -> AssetDB: Upsert assets
+
+== Step 3: Apply Tags (NEW) ==
+
+Admin2 -> Retool: Tag asset as "REBASING"
+Retool -> Service: AddTagsToAsset gRPC
+Service -> TagDB: Store tag association
+TagDB --> Service: ✓
+Service --> Retool: Success
+
+== Step 4: Client Refresh (Enhanced) ==
+
+Client -> Service: ListAssetTypes +\nListTagsWithAssetTypeIDs\n(every 10s)
+activate Client
+
+Service -> AssetDB: Query assets
+activate Service
+AssetDB --> Service: Assets list
+Service -> TagDB: Query tags
+TagDB --> Service: Tags map
+Service --> Client: Assets + Tags
+deactivate Service
+
+Client -> AssetCache: Store assets
+Client -> TagCache: Store tag mappings
+note right
+  AssetCache[assetID] = AssetInfo
+  TagCache[tag] = []assetIDs
+
+  Example:
+  TagCache["REBASING"] =
+    ["ethereum:steth", "ethereum:reth"]
+end note
+deactivate Client
+
+== Step 5: Service Usage (Enhanced) ==
+
+Services -> Client: GetByTags("REBASING")
+activate Services
+Client -> TagCache: Lookup
+TagCache --> Client: Asset IDs
+Client -> AssetCache: Get asset details
+AssetCache --> Client: Asset info
+Client --> Services: Rebasing assets with full details
+
+Services -> Services: Apply rebasing logic\nto all returned assets
+deactivate Services
+
+@enduml

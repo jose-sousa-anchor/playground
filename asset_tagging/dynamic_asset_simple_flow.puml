@@ -1,0 +1,65 @@
+@startuml Dynamic Asset Flow - Simplified
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam BoxPadding 20
+
+title Dynamic Asset Addition - Simplified Flow
+
+box "Asset Creation" #LightBlue
+  actor Admin
+  participant "GraphQL API" as API
+  participant "Organization\nService" as Org
+end box
+
+box "Storage & Signing" #LightGreen
+  database "Special Org\n(ASSET_SUPPORT_V2)" as SpecialOrg
+  participant "HSM" as HSM
+end box
+
+box "Asset Registry Service" #LightYellow
+  participant "Cron Job\n(60s)" as Cron
+  database "Database" as DB
+end box
+
+box "Client Services" #LightPink
+  participant "AssetTypes\nClient (10s)" as Client
+  database "Cache" as Cache
+  participant "Services" as Services
+end box
+
+== 1. Asset Addition & Approval ==
+
+Admin -> API: Add Asset Support\n(name, network, decimals, etc.)
+API -> Org: Create organization change
+
+Org -> HSM: Sign organization with new asset
+HSM --> SpecialOrg: Store signed organization ✓
+
+== 2. Asset Registry Sync ==
+
+Cron -> SpecialOrg: Get special org (every 60s)
+SpecialOrg --> Cron: Return all AssetConfigs
+Cron -> DB: Upsert asset records
+note right
+  Stores asset metadata:
+  name, decimals, networkID, etc.
+end note
+
+== 3. Client Cache Population ==
+
+Client -> DB: ListAssetTypes gRPC (every 10s)
+DB --> Client: Return asset list
+Client -> Cache: Update in-memory cache
+note right
+  Maps assetTypeID -> AssetInfo
+  Triggers callbacks for consumers
+end note
+
+== 4. Service Usage ==
+
+Services -> Client: Get asset info by ID
+Client -> Cache: Lookup in cache
+Cache --> Client: Return AssetInfo
+Client --> Services: Asset details available
+
+@enduml

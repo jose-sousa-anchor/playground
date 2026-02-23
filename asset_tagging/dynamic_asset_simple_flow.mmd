@@ -1,0 +1,62 @@
+```mermaid
+sequenceDiagram
+    title Dynamic Assets Flow
+
+    box LightBlue Asset Creation
+        actor Admin
+        participant API as GraphQL API
+        participant Org as Organization<br/>Service
+    end
+
+    box LightGreen Storage & Signing
+        participant SpecialOrg as Special Org<br/>(ASSET_SUPPORT_V2)
+        participant HSM
+    end
+
+    box LightYellow Asset Registry Service
+        participant Cron as Cron Job<br/>(60s)
+        participant DB as Database
+    end
+
+    box LightPink Client Services
+        participant Client as AssetTypes<br/>Client (10s)
+        participant Cache
+        participant Services
+    end
+
+    rect rgb(240, 240, 255)
+        Note over Admin,HSM: 1. Asset Addition & Approval
+
+        Admin->>API: Add Asset Support<br/>(name, network, decimals, etc.)
+        API->>Org: Create organization change
+        Org->>HSM: Sign organization with new asset
+        HSM->>SpecialOrg: Store signed organization ✓
+    end
+
+    rect rgb(240, 255, 240)
+        Note over Cron,DB: 2. Asset Registry Sync
+
+        Cron->>SpecialOrg: Get special org (every 60s)
+        SpecialOrg->>Cron: Return all AssetConfigs
+        Cron->>DB: Upsert asset records
+        Note right of DB: Stores asset metadata:<br/>name, decimals, networkID, etc.
+    end
+
+    rect rgb(255, 240, 240)
+        Note over Client,Cache: 3. Client Cache Population
+
+        Client->>DB: ListAssetTypes gRPC (every 10s)
+        DB->>Client: Return asset list
+        Client->>Cache: Update in-memory cache
+        Note right of Cache: Maps assetTypeID -> AssetInfo<br/>Triggers callbacks for consumers
+    end
+
+    rect rgb(255, 255, 240)
+        Note over Services,Cache: 4. Service Usage
+
+        Services->>Client: Get asset info by ID
+        Client->>Cache: Lookup in cache
+        Cache->>Client: Return AssetInfo
+        Client->>Services: Asset details available
+    end
+```

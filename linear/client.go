@@ -33,13 +33,13 @@ type GraphQLRequest struct {
 
 // GraphQLResponse represents a GraphQL response
 type GraphQLResponse struct {
-	Data   json.RawMessage          `json:"data,omitempty"`
-	Errors []GraphQLError           `json:"errors,omitempty"`
+	Data   json.RawMessage `json:"data,omitempty"`
+	Errors []GraphQLError  `json:"errors,omitempty"`
 }
 
 // GraphQLError represents a GraphQL error
 type GraphQLError struct {
-	Message string `json:"message"`
+	Message string   `json:"message"`
 	Path    []string `json:"path,omitempty"`
 }
 
@@ -306,6 +306,99 @@ func (c *LinearClient) GetProjectIssues(projectID string) (map[string]interface{
 	var result map[string]interface{}
 	if err := json.Unmarshal(resp.Data, &result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal project issues data: %w", err)
+	}
+
+	return result, nil
+}
+
+// GetIssueByIdentifier fetches a specific issue by its identifier (e.g., "PROC-4443")
+func (c *LinearClient) GetIssueByIdentifier(identifier string) (map[string]interface{}, error) {
+	query := `
+		query IssueByIdentifier($identifier: String!) {
+			issue(id: $identifier) {
+				id
+				title
+				identifier
+				description
+				priority
+				estimate
+				state {
+					name
+					type
+				}
+				assignee {
+					id
+					name
+					email
+				}
+				creator {
+					id
+					name
+					email
+				}
+				parent {
+					id
+					title
+					identifier
+				}
+				children {
+					nodes {
+						id
+						title
+						identifier
+					}
+				}
+				labels {
+					nodes {
+						id
+						name
+						color
+					}
+				}
+				comments {
+					nodes {
+						id
+						body
+						createdAt
+						user {
+							name
+							email
+						}
+					}
+				}
+				createdAt
+				updatedAt
+				startedAt
+				completedAt
+				canceledAt
+				dueDate
+				url
+				project {
+					id
+					name
+					description
+				}
+				team {
+					id
+					name
+					key
+				}
+			}
+		}
+	`
+
+	variables := map[string]interface{}{
+		"identifier": identifier,
+	}
+
+	resp, err := c.Query(query, variables)
+	if err != nil {
+		return nil, err
+	}
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &result); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal issue data: %w", err)
 	}
 
 	return result, nil

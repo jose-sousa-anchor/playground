@@ -1,0 +1,85 @@
+@startuml Asset Tagging Flow - Simplified
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam BoxPadding 20
+
+title Asset Registry Tagging - Simplified Flow
+
+box "Tag Definition" #LightBlue
+  actor Engineer
+  participant "PR Review" as PR
+end box
+
+box "Tag Management" #LightGreen
+  actor "Ops/Admin" as Admin
+  participant "Retool UI" as Retool
+  participant "Asset Registry\nService" as Service
+  database "asset_tag\nTable" as TagDB
+end box
+
+box "Client Services" #LightPink
+  participant "AssetTypes\nClient (10s)" as Client
+  database "Tags Cache" as Cache
+  participant "Services" as Services
+end box
+
+== 1. Tag Definition (One-time) ==
+
+Engineer -> PR: Create new tag definition\n(REBASING, STABLE, etc.)
+note right
+  Tag must have:
+  - Name (e.g., "REBASING")
+  - Description
+  - Behavioral implications
+end note
+PR --> Engineer: Merged & deployed ✓
+
+== 2. Apply Tags to Assets ==
+
+Admin -> Retool: Select asset tags
+Retool -> Service: SetAssetTags gRPC\n(assetTypeID, tags[])
+Service -> TagDB: Insert asset_tag records\n(asset_id, tag)
+note right
+  Unique constraint on
+  (asset_id, tag) pair
+
+  Audit trail via entaudit
+end note
+TagDB --> Service: Tags stored ✓
+Service --> Retool: Return current tags
+Retool --> Admin: Success confirmation
+
+== 3. Client Cache Population ==
+
+Client -> Service: ListTagsWithAssetTypeIDs gRPC\n(every 10s)
+activate Client
+activate Service
+Service -> TagDB: Query all asset_tag records
+TagDB --> Service: Return tag -> assetIDs map
+Service --> Client: Map[tag][]assetTypeIDs
+deactivate Service
+
+Client -> Cache: Update tagsCache\n(sync.Map)
+note right
+  Cache structure:
+  tagsCache[tag] = []assetTypeIDs
+
+  Example:
+  tagsCache["REBASING"] =
+    ["ethereum:steth", "ethereum:reth"]
+end note
+Cache --> Client: Tags cached ✓
+deactivate Client
+
+== 4. Service Usage ==
+
+Services -> Client: GetByTags("REBASING")
+activate Services
+activate Client
+Client -> Cache: Lookup tag in tagsCache
+Cache --> Client: Return []assetTypeIDs
+Client --> Services: List of rebasing assets
+deactivate Client
+deactivate Services
+
+@enduml

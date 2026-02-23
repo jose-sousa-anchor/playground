@@ -1,0 +1,3 @@
+{
+  "query": "query { issue(id: \"PROC-4443\") { id title identifier description priority estimate state { name type } assignee { id name email } creator { id name email } parent { id title identifier } children { nodes { id title identifier } } labels { nodes { id name color } } comments { nodes { id body createdAt user { name email } } } createdAt updatedAt startedAt completedAt canceledAt dueDate url project { id name description } team { id name key } } }"
+}
