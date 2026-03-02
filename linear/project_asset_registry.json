@@ -1,0 +1,1583 @@
+{
+  "project": {
+    "completedAt": null,
+    "description": "Transform Asset Information into a scalable platform with Asset Registry as the single source of truth, automated token operations, and robust enablement workflows.",
+    "id": "06b4b3ff-9a2c-4961-a581-1565bdb40a6f",
+    "issues": {
+      "nodes": [
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-03-02T15:47:24.714Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "# Description\n\nRemoving Static assets is the goal, but we need to plan how to get there\n\n# **Acceptance Criteria**\n\n* Tickets added and refined with the entire team for the new milestone",
+          "estimate": null,
+          "id": "69719151-73bc-49d6-861b-77dcc33595ce",
+          "identifier": "PROC-4572",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Plan Final Removal of Static Assets",
+          "updatedAt": "2026-03-02T15:47:24.714Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4572/plan-final-removal-of-static-assets"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-24T18:31:07.531Z",
+          "creator": {
+            "email": "patrick.andrew@anchorlabs.com",
+            "name": "Patrick Andrew"
+          },
+          "description": "# Description\n\nAs a user of the asset list retool, I may want to append a note to an `asset` such that I can identify why an asset is configured the way it is.\n\nFor example:  I would like to be able to disable an asset by removing support for all entities.  I should be able to see a note in the Retool explaining why it was disabled.\n\n# **Acceptance Criteria**\n\n* Retool should displace a notes section for each asset. \n\n# **Dependencies**\n\nI'm guessing this relies on some database to add a note field to the asset definitions .",
+          "estimate": null,
+          "id": "c29c9b91-27e5-465b-ab33-90c65a8e98bd",
+          "identifier": "PROC-4545",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Asset List retool should have notes for AssetsTypes.",
+          "updatedAt": "2026-02-24T18:31:59.938Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4545/asset-list-retool-should-have-notes-for-assetstypes"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-23T21:15:59.772Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Running services locally in Kubernetes via Tilt shows non-deterministic startup because services wait for infra dependencies (databases, mailhog, fakegcs, etc.) but not for each other.\n\nExamples observed:\n\n* `assetregistry` crashloops if the `organization` pod is not up yet.\n* `blockchain` crashloops if `assetregistry` is down.\n\nConsider reducing `assetregistry` as a single point of failure (e.g., services keeping a persistent copy of assetregistry data until next refresh) so services can restart/operate in a degraded state while dependencies recover.\n\nSlack thread: [https://anchorinc.slack.com/archives/C061FN8EAER/p1771639096880819](\u003chttps://anchorinc.slack.com/archives/C061FN8EAER/p1771639096880819\u003e)",
+          "estimate": null,
+          "id": "f4028581-b2be-4e5f-bfe8-9b87fd1f1852",
+          "identifier": "PROC-4540",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 4,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Services crashloop on missing dependencies in local k8s (read thread!)",
+          "updatedAt": "2026-03-02T15:03:24.989Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4540/services-crashloop-on-missing-dependencies-in-local-k8s-read-thread"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-23T17:14:19.638Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "# Description\n\nBasically title, but this is important to know why sometimes we see the `Detected statically registered asset with the same ID of the dynamic asset being registered. Asset properties are distinct`\n\nAnd in the Asset Types retool, dynamic assets are shown in case of definitions on both sides. Unable to identify the differences.\n\n# **Acceptance Criteria**\n\n* Able to see duplicated assets in the UI (Retool)\n* Able to see both assets information\n* Able to check the differences",
+          "estimate": null,
+          "id": "c2825136-a06c-4241-b004-c89b81e3e47b",
+          "identifier": "PROC-4538",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "Asset List retool (and also any other UI) should show when we have duplicated assets - static and dynamic",
+          "updatedAt": "2026-02-24T18:31:07.531Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4538/asset-list-retool-and-also-any-other-ui-should-show-when-we-have"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-23T14:29:52.967Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "# Description\n\nTwo assets cannot have the same contract address. We need to prevent Asset Registry from allowing the registration of an asset with a contract that matches an existing asset.\n\nContext: [https://anchorinc.slack.com/archives/C08AG2X4UFM/p1771581389059669](\u003chttps://anchorinc.slack.com/archives/C08AG2X4UFM/p1771581389059669\u003e)\n\n# **Acceptance Criteria**\n\n* Attempting to add an asset with the contract address that another asset already has should fail with an informative message that includes some information about the conflicting asset\n* If a pending operation to create an asset with the same contract exists, the action should fail with an informative message that includes some information about the conflicting asset",
+          "estimate": null,
+          "id": "be525145-2ee2-4b76-b93b-f7171590afba",
+          "identifier": "PROC-4537",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Check for Duplicate Contract Address",
+          "updatedAt": "2026-02-24T17:59:44.191Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4537/check-for-duplicate-contract-address"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:55:58.055Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nWIP Spec Suggestions: [https://www.notion.so/anchorage/Asset-Tagging-GraphQL-Federation-2fd5b28f309180b4960de5f00e362861?source=copy_link](\u003chttps://www.notion.so/anchorage/Asset-Tagging-GraphQL-Federation-2fd5b28f309180b4960de5f00e362861?source=copy_link\u003e)\n\nCreate a new query or augment an existing query in the Asset Registry service's GraphQL schema to expose asset **Tags** — the new tagging system being built in the [Asset Registry Tagging](https://linear.app/anchorlabs/project/asset-registry-tagging-6ebebe183aa8) project.\n\n### Acceptance Criteria\n\n- [ ] Tag information for assets is queryable via the Asset Registry GraphQL API\n- [ ] Appropriate access controls are applied\n- [ ] Tests cover the new tag query/field",
+          "estimate": null,
+          "id": "157a327c-5a36-4b98-b005-e7a5a5f01acc",
+          "identifier": "PROC-4478",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Add Tags support to Asset Registry GraphQL query",
+          "updatedAt": "2026-02-06T16:01:38.285Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4478/add-tags-support-to-asset-registry-graphql-query"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:53:05.627Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `removeAssetEnablementStatusOverride` GraphQL mutation from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/risk_query_and_mutation.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Mutation Details\n\n* **Name**: `removeAssetEnablementStatusOverride`\n* **Description**: Removes an enablement status override for a given asset, organization, and entity.\n* **Parameters**:\n  * `assetTypeID: AssetTypeID!` (required)\n  * `entity: AnchorageEntityType!` (required)\n  * `organizationKeyID: String!` (required)\n* **Returns**: `Boolean!`\n* **Logger Component**: ASSET_REGISTRY\n\n### Acceptance Criteria\n\n- [ ] Mutation is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Mutation in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "ca919016-e041-458b-9ead-21f66cbb108f",
+          "identifier": "PROC-4477",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `removeAssetEnablementStatusOverride` mutation from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:11.977Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4477/migrate-removeassetenablementstatusoverride-mutation-from-graphql"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:53:03.693Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `setAssetEnablementStatusOverride` GraphQL mutation from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/risk_query_and_mutation.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Mutation Details\n\n* **Name**: `setAssetEnablementStatusOverride`\n* **Description**: Sets an enablement status override for a given asset, organization, and entity. Overrides enable or disable an asset type for a specific organization regardless of the default/entity enablement rule.\n* **Parameters**:\n  * `assetTypeID: AssetTypeID!` (required)\n  * `entity: AnchorageEntityType!` (required)\n  * `organizationKeyID: String!` (required)\n  * `enabled: Boolean!` (required)\n* **Returns**: `Boolean!`\n* **Logger Component**: ASSET_REGISTRY\n\n### Acceptance Criteria\n\n- [ ] Mutation is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Override behavior (org-specific enablement) is preserved\n- [ ] Mutation in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "7e55536e-1b0b-4775-977c-f5d349c99a3f",
+          "identifier": "PROC-4476",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `setAssetEnablementStatusOverride` mutation from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:07.722Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4476/migrate-setassetenablementstatusoverride-mutation-from-graphql"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:53:00.356Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `setAssetEnablementStatus` GraphQL mutation from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/risk_query_and_mutation.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Mutation Details\n\n* **Name**: `setAssetEnablementStatus`\n* **Description**: Sets the asset enablement status for a given asset type and entity. If the asset was previously requested by organizations, users who submitted those requests will receive push notifications.\n* **Parameters**:\n  * `assetTypeID: AssetTypeID!` (required)\n  * `entity: AnchorageEntityType!` (required)\n  * `enabled: Boolean!` (required)\n* **Returns**: `Boolean!`\n* **Logger Component**: ASSET_REGISTRY\n\n### Acceptance Criteria\n\n- [ ] Mutation is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Push notification behavior for previously-requested assets is preserved\n- [ ] Mutation in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "8a085163-4b01-494e-af81-edf17465a52a",
+          "identifier": "PROC-4475",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `setAssetEnablementStatus` mutation from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:48.315Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4475/migrate-setassetenablementstatus-mutation-from-graphql-monolith-to"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:55.986Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `assetSupportRequests` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/app_query.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `assetSupportRequests`\n* **Description**: Returns a paginated list of asset support requests with optional filtering by organization, network, asset type, and contract address.\n* **Parameters**:\n  * `first: Int` (optional) - pagination\n  * `last: Int` (optional) - pagination\n  * `after: ID` (optional) - pagination cursor\n  * `before: ID` (optional) - pagination cursor\n  * `orgID: String` (optional) - filter by organization\n  * `networkId: String` (optional) - filter by network\n  * `assetTypeId: String` (optional) - filter by asset type\n  * `contractAddress: String` (optional) - filter by contract address\n* **Returns**: `AssetSupportRequestConnection!`\n* **Accessibility**: All authenticated users\n* **Logger Component**: CUSTODY\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Pagination (connection pattern) works correctly\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "796a8a31-d2e2-4992-8706-131783570926",
+          "identifier": "PROC-4474",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `assetSupportRequests` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:13.081Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4474/migrate-assetsupportrequests-query-from-graphql-monolith-to-asset"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:53.708Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `getAssetTypesEnabledForOrg` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/risk_query_and_mutation.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `getAssetTypesEnabledForOrg`\n* **Description**: Retrieves the enabled asset types for a specific organization.\n* **Parameters**:\n  * `organizationKeyID: String!` (required)\n* **Returns**: `[AssetTypeID!]!`\n* **Accessibility**: STAFF only\n* **Logger Component**: CUSTODY\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Staff-only access control is preserved\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "4e9225df-356e-435b-bfdd-0fd31f2a2290",
+          "identifier": "PROC-4473",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `getAssetTypesEnabledForOrg` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:14.538Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4473/migrate-getassettypesenabledfororg-query-from-graphql-monolith-to"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:51.152Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `getAssetsEnablementInfo` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/app_and_risk_query.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `getAssetsEnablementInfo`\n* **Description**: Returns a list of enablement information for all supported asset types. Includes enablement status rules for different entities and organization-specific overrides.\n* **Parameters**:\n  * `filterAssetTypeIDs: [AssetTypeID!]` (optional) - filters results to specific asset type IDs\n* **Returns**: `[AssetEnablementInfo!]!`\n* **Accessibility**: STAFF only\n* **Logger Component**: BLOCKCHAIN\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Staff-only access control is preserved\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "44ef6942-93b3-4a45-b881-a1b031dbe036",
+          "identifier": "PROC-4472",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `getAssetsEnablementInfo` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:17.699Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4472/migrate-getassetsenablementinfo-query-from-graphql-monolith-to-asset"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:49.501Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `assetTypeInfo` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/app_and_risk_query.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `assetTypeInfo`\n* **Description**: Returns detailed information regarding a specific asset type.\n* **Parameters**:\n  * `assetType: AssetTypeID!` (required)\n* **Returns**: `AssetTypeInfo!`\n* **Accessibility**: STAFF, ORG_USER\n* **Logger Component**: BLOCKCHAIN\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "eea5e007-d2f6-49cb-a34a-cc7ca6d2b760",
+          "identifier": "PROC-4471",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `assetTypeInfo` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:31.029Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4471/migrate-assettypeinfo-query-from-graphql-monolith-to-asset-registry"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:40.892Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `nativeAssetTypeInfos` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/app_and_risk_query.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `nativeAssetTypeInfos`\n* **Description**: Returns a list of information for all native (non-wrapped) supported asset types. Can be sorted by popularity.\n* **Parameters**:\n  * `sortByPopularity: Boolean` (optional)\n* **Returns**: `[AssetTypeInfo!]!`\n* **Accessibility**: STAFF, ORG_USER\n* **Logger Component**: BLOCKCHAIN\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "016ce283-f5da-414a-bc7d-823307f7c797",
+          "identifier": "PROC-4470",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `nativeAssetTypeInfos` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:54:39.484Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4470/migrate-nativeassettypeinfos-query-from-graphql-monolith-to-asset"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-06T14:52:36.930Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "## Description\n\nMigrate the `assetTypeInfos` GraphQL query from the `graphqlmonolith` service to the Asset Registry service as part of the GraphQL federation effort.\n\n### Current Location\n\n* **Schema**: `source/go/service/graphqlmonolith/gqlgenmonolith/schema/app_and_risk_query.graphqls`\n* **Service**: `graphqlmonolith`\n\n### Query Details\n\n* **Name**: `assetTypeInfos`\n* **Description**: Returns a list of information for all supported asset types. Supports filtering by fiat status, network IDs, and contract addresses, and can be sorted by popularity.\n* **Parameters**:\n  * `isFiat: Boolean` (optional)\n  * `sortByPopularity: Boolean` (optional)\n  * `filterByNetworkIDs: [String!]` (optional)\n  * `filterByContractAddresses: [String!]` (optional)\n* **Returns**: `[AssetTypeInfo!]!`\n* **Accessibility**: STAFF, ORG_USER\n* **Logger Component**: BLOCKCHAIN\n\n### Acceptance Criteria\n\n- [ ] Query is implemented in the Asset Registry service's GraphQL schema\n- [ ] Resolver logic is migrated and functional in Asset Registry\n- [ ] Query in the monolith is deprecated / proxies to Asset Registry (or removed)\n- [ ] Existing clients continue to work without breaking changes\n- [ ] Tests are added/migrated for the new location",
+          "estimate": null,
+          "id": "96677de4-b590-48b1-9745-565b7520b067",
+          "identifier": "PROC-4469",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Migrate `assetTypeInfos` query from GraphQL monolith to Asset Registry service",
+          "updatedAt": "2026-02-06T14:53:35.310Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4469/migrate-assettypeinfos-query-from-graphql-monolith-to-asset-registry"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2026-02-04T20:37:17.004Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "# Description\n\nWhen refreshing the types, we should be able to check if the client actually needs to update. This should:\n\n1. Reduce the load on the Asset Registry Database\n2. Reduce the data flowing across the wire\n3. Reduce the amount of time a service that uses Asset Registry has to spend updating the local cache\n\n### Notes\n\n* Consider ETag type setup like HTTP has?\n\n# **Acceptance Criteria**\n\n* Clients only update the local cache when they:\n  * Don't have any data\n  * Data has changed\n* In the case of a cache hit, very limited data needs to flow across the wire",
+          "estimate": null,
+          "id": "b3175c6d-979d-4222-98d0-a1ae508f76c3",
+          "identifier": "PROC-4464",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Don't Update the Cache if no changes",
+          "updatedAt": "2026-02-04T20:37:17.004Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4464/dont-update-the-cache-if-no-changes"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-12-09T15:35:05.276Z",
+          "creator": {
+            "email": "joao.pinho@anchorlabs.com",
+            "name": "Joao Pinho"
+          },
+          "description": "# Description\n\nWhen retrieving assert enablement rules that target an invalid or unknown asset type ID, the asset registry service panics.\n\nGracefully handle invalid asset type IDs when parsing enablement rules.\n\nThread of the [reported issue](https://anchorinc.slack.com/archives/C01SZAGRQFL/p1764940072686139)\n\n```json\ngoroutine 932210 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/anchorlabsinc/anchorage/source/go/lib/std/grpcutil.grpcPanicHandler({0x2a52b80, 0xc00094f350}, {0x1f5cee0, 0xc0014068b0})\n\tgithub.com/anchorlabsinc/anchorage/source/go/lib/std/grpcutil/grpcutil.go:267 +0x3f\ngithub.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery.recoverFrom({0x2a52b80?, 0xc00094f350?}, {0x1f5cee0?, 0xc0014068b0?}, 0xc000c0f6c0?)\n\tgithub.com/grpc-ecosystem/go-grpc-middleware/v2@v2.3.2/interceptors/recovery/interceptors.go:54 +0xea\ngithub.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery.StreamServerInterceptor.func1.1()\n\tgithub.com/grpc-ecosystem/go-grpc-middleware/v2@v2.3.2/interceptors/recovery/interceptors.go:44 +0x7b\npanic({0x1f5cee0?, 0xc0014068b0?})\n\truntime/panic.go:783 +0x132\ngithub.com/anchorlabsinc/anchorage/source/go/lib/util/errorsutil.ShouldNotError({0x2a2d580?, 0xc0011d2640?}, {0xc00173fac4, 0x4})\n\tgithub.com/anchorlabsinc/anchorage/source/go/lib/util/errorsutil/suppress.go:29 +0xd9\ngithub.com/anchorlabsinc/anchorage/source/go/lib/assettype.ID.Network({0xc00173fac4, 0x4})\n\tgithub.com/anchorlabsinc/anchorage/source/go/lib/assettype/asset_type_id.go:62 +0xe8\ngithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/assetenablement.(*assetEnablementV2).idBelongsToDeployedNetwork(0xc000bde400, {0xc00173fac4?, 0xc00173faa2?})\n\tgithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/assetenablement/logic_v2.go:645 +0x25\ngithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/assetenablement.(*assetEnablementV2).GetAssetEnablementInfos(0xc000bde400, {0x2a52b80?, 0xc00094f350?}, {0x43aa4e0, 0x0, 0x0})\n\tgithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/assetenablement/logic_v2.go:76 +0x2d7\ngithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/grpc.(*GRPCServer).ListEnablementInfo(0xc000dd42c0, 0x2381e80?, {0x2a5db40, 0xc001104ab0})\n\tgithub.com/anchorlabsinc/anchorage/source/go/service/assetregistry/internal/grpc/assetenablement_server.go:83 +0xfa\ngithub.com/anchorlabsinc/anchorage/source/go/lib/protobufs/assetregistryproto._AssetEnablement_ListEnablementInfo_Handler({0x2381e80, 0xc000dd42c0}, {0x2a5a8d0, 0xc0011e4660})\n\tgithub.com/anchorlabsinc/anchorage/source/go/lib/protobufs/assetregistryproto/assetenablement_grpc.pb.go:310 +0x110\ngithub.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery.StreamServerInterceptor.func1({0x238\n```\n\n# **Acceptance Criteria**\n\n* Handling of enablement rules from removed asset type IDs no longer causes asset registry to panic.\n  * Instead logging errors as needed and ignoring the failing asset",
+          "estimate": 2,
+          "id": "f02bb01d-da5b-49ee-ade3-0221be9baebf",
+          "identifier": "PROC-4262",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#26b5ce",
+                "id": "361fdbfb-ea46-45cf-908b-f6dc271ee2db",
+                "name": "Backend"
+              },
+              {
+                "color": "#f2c94c",
+                "id": "9bf31fe7-847f-4ae4-99a2-86a432289ceb",
+                "name": "Maintenance"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 2,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Log and ignore returned enablement rules for missing asset type ids",
+          "updatedAt": "2026-01-12T15:01:38.347Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4262/log-and-ignore-returned-enablement-rules-for-missing-asset-type-ids"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-12-05T14:51:04.204Z",
+          "creator": {
+            "email": "wil.wade@anchorlabs.com",
+            "name": "Wil Wade"
+          },
+          "description": "# Description\n\nRemoving assets causes issues between the different services. We have no reason to remove assets in production\n\n* Static Assets\n* Dynamic Assets\n\n# **Acceptance Criteria**\n\n* A runbook for how to properly remove assets\n\n## Related\n\n* [PROC-4241](https://linear.app/anchorlabs/issue/PROC-4241/use-pubsub-events-to-change-listen-asset-support-operations-and-org) ",
+          "estimate": null,
+          "id": "0d6c3339-f92d-4dfe-b21a-68efde83c731",
+          "identifier": "PROC-4255",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 2,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Remove the ability to delete assets",
+          "updatedAt": "2025-12-05T14:51:04.350Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4255/remove-the-ability-to-delete-assets"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-12-04T10:54:22.908Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "We added the enablement client inside the assetregisty service folder, but since we are not using modules this is not a good idea. We should move the client out to the assetregistry folder inside the lib folder.\n\nMaybe out of the scope of this milestone.",
+          "estimate": null,
+          "id": "2619a5cb-8afe-407d-badd-776d59bfa5d2",
+          "identifier": "PROC-4242",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#26b5ce",
+                "id": "361fdbfb-ea46-45cf-908b-f6dc271ee2db",
+                "name": "Backend"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 4,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Move the enablement client out of the service folder",
+          "updatedAt": "2025-12-05T14:45:37.983Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4242/move-the-enablement-client-out-of-the-service-folder"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-12-03T22:30:46.059Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "So, we to remove direct dependencies from other services, we should move that calls into a event based data handling\n\n* when an asset support operation occurs (add, update, remove) to feed the xpress assets - service/organization/logic/notification/notification.go\n* listen org create or similar to store the entities of a org and remove the kyc call to filter enablement information (look at the kyc call in the logic_v2.go)",
+          "estimate": null,
+          "id": "07d27e40-836b-4697-8c7c-34d9c0659b78",
+          "identifier": "PROC-4241",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Use pubsub events to change listen asset support operations and org entities",
+          "updatedAt": "2025-12-05T14:51:37.385Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4241/use-pubsub-events-to-change-listen-asset-support-operations-and-org"
+        },
+        {
+          "assignee": {
+            "email": "prasanna@anchorlabs.com",
+            "id": "cb5a8155-5fd4-47be-871a-b94c726df7cf",
+            "name": "Prasanna Gautam"
+          },
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-12-02T10:51:52.152Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "While testing an enablement flow, we notice that when we enable a token in the entity X, but the native asset type is not enabled for that entity but enabled for others it will show that token anyway.\n\nThis is because of the entities. We filter it at first, but then ignore it after get all the asset enablement.\n\nIsEnabledForOrg or GetEnabledForOrg in the logic_v2.go",
+          "estimate": null,
+          "id": "98093e22-1832-4cb1-8545-1d36f0e32f14",
+          "identifier": "PROC-4222",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 1,
+          "state": {
+            "name": "In Progress",
+            "type": "started"
+          },
+          "title": "Don't allow enable a token when the native asset is not enabled",
+          "updatedAt": "2026-01-21T23:53:39.053Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4222/dont-allow-enable-a-token-when-the-native-asset-is-not-enabled"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-11-27T10:50:50.350Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Static overrides xpress assets and never the opposite ",
+          "estimate": null,
+          "id": "d036e174-b785-48c0-9941-f62a715f5b41",
+          "identifier": "PROC-4213",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 2,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Investigate if we are handling the precedence in BE like we do in HSM",
+          "updatedAt": "2025-11-27T10:51:57.476Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4213/investigate-if-we-are-handling-the-precedence-in-be-like-we-do-in-hsm"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-11-13T10:51:22.022Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "@kyle.kamimoto said:\n\n\u003e Could someone take a quick look at this [withdrawal](https://backoffice.anchorage-staging.com/operations/daa7ae9f77a19420e945103564954d0e12b50b53667a7f5e5f94ec86a44e5649/detail/) on Ethereum Sepolia in Tether's sandbox in Staging? It's stuck in `Broadcasted`, but it's been confirmed on-chain since last night [https://sepolia.etherscan.io/tx/0x24b970b27a223344b297b2885b1d41bc3b497ea0fd50bca30cabda8f91685230](https://sepolia.etherscan.io/tx/0x24b970b27a223344b297b2885b1d41bc3b497ea0fd50bca30cabda8f91685230)\n\u003e\n\u003e [Sepolia Transaction Hash: 0x24b970b27a... | Etherscan](https://sepolia.etherscan.io/tx/0x24b970b27a223344b297b2885b1d41bc3b497ea0fd50bca30cabda8f91685230)\n\n![image.png](https://uploads.linear.app/e70de580-dbcb-4d45-a658-6654ba960c03/442ffbad-d4bf-4f43-9ddd-fe0c10221f74/a5b82516-a8cf-418b-9af5-d968b63fd34f)",
+          "estimate": null,
+          "id": "4e2cab9d-891f-4990-8b09-031af3c03bb7",
+          "identifier": "PROC-4151",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#4cb782",
+                "id": "e48494d7-66c5-4c8b-996b-3780172586ed",
+                "name": "Good First Issue"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 3,
+          "state": {
+            "name": "Todo",
+            "type": "unstarted"
+          },
+          "title": "Limit the length of the asset type ID to 20 characters",
+          "updatedAt": "2026-02-04T14:33:31.596Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4151/limit-the-length-of-the-asset-type-id-to-20-characters"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-11-10T12:21:59.247Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "We need a kind of soft delete in the list of the assets, to make it possible to filter out, in cases like the SAVAX_AVAXCCHAIN, where we are now showing a DEPRECATED asset just because we don't filter it.\n\n## Acceptance Criteria\n\n* We are able to hide asset types that are marked as deprecated\n* We cannot deprecated assets that are enabled\n* Deprecated assets cannot be enabled",
+          "estimate": null,
+          "id": "4f1ff7ee-3b4c-46a8-9724-5c47d00b5d36",
+          "identifier": "PROC-4127",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Add a new property to make the asset type deprecated",
+          "updatedAt": "2026-01-28T06:04:19.601Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4127/add-a-new-property-to-make-the-asset-type-deprecated"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-10-29T22:00:52.811Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "@jonathan.geisler said:\n\n\u003e Based on several (non-)incidents this week, I think it would be useful for the asset express to check if the HSM has authorized an asset before allowing it to be enabled and getting an error from the HSM.",
+          "estimate": null,
+          "id": "e0fbbabe-c030-40b8-af41-1ceb4acde524",
+          "identifier": "PROC-4047",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Based on several (non-)incidents this week, I think it would be useful for the asset express to c...",
+          "updatedAt": "2025-11-13T13:05:08.785Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-4047/based-on-several-non-incidents-this-week-i-think-it-would-be-useful"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-09-15T09:59:11.174Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Piggybacking on the move of watchers to cloud deploy, we want to add the capability to enable networks dynamically. To achieve that, we need to make all the modules and periodic tasks created/enabled dynamically by the enablement of a network.\n\n### Example\n\nAt the moment we don't have a clear way to enable a new network, but we can use Retool to these kinds of operations and observe the current state by networks. Regardless, we can think on a few options of what we can do after enabling or disabling a new network: \n\n​Option 1: the system responds in a sync way when we enable a network, by creating the required periodic tasks and creating the module.\n\nOption 2: the system gets the list of all available networks and by default tries to create the required periodic tasks and modules. If the network is disabled we pause them until a change occurs. For the case of the Modules we can create all of them by default.\n\nOption 3: ?\n\n## Acceptance Criteria\n\n* We are able to enable/create modules and periodic tasks dynamically when a network is enabled or disabled\n\n# Dependencies\n\nThis task will cannot move forward until we move all watchers to cloud deploy.",
+          "estimate": null,
+          "id": "7d680afc-a479-4654-9e8e-e9ee87ee4fe7",
+          "identifier": "PROC-3848",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#5e6ad2",
+                "id": "3aaa2d14-67fa-4d43-a64f-c06c8ee032e4",
+                "name": "Discovery"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Investigate how Blockchain starts periodic tasks and modules based on enabled networks",
+          "updatedAt": "2025-11-13T13:02:59.249Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3848/investigate-how-blockchain-starts-periodic-tasks-and-modules-based-on"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-09-09T11:39:39.014Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now, that we are moving away from a global env var (`ANCHOR_ASSET_TYPES_ENABLED`), we should identify and understand how can we solve the challenges around using the `ANCHOR_TEST_ASSET_TYPES_WHITELIST`that is used to identify netwroks/assets for specific tests\n\nThis can make an impact in all the tests that we are running right now.\n\n## Acceptance Criteria\n\n* Identify the tasks that we need to accomplish to solve the problem",
+          "estimate": null,
+          "id": "c15d434e-db7d-46b6-8f9f-305b3cf39c7e",
+          "identifier": "PROC-3832",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Identify the changes we need to do related to `ANCHOR_TEST_ASSET_TYPES_WHITELIST`",
+          "updatedAt": "2025-11-13T13:00:21.568Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3832/identify-the-changes-we-need-to-do-related-to-anchor-test-asset-types"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-09-05T09:59:45.728Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "# Description\n\nAt the moment we use the network regex expression to verify if the onchain identifier that we are adding is valid or not. The problem is that for some token types, like `LSD_APTOS` on Aptos, the onchain identifier has some suffix that is not part of the regex ( `3a30a6e5936c0a4c5140daed34de39d17ca7fcae08f947c02e979cef98a3719:🪙:LSD` - instead of emoji it is : coin : ).\n\nWe need to update this to allow users to add a new token with no issues, but we need to decide if we change the regex, add a new one specific for tokens or remove the validation in specific cases.\n\n# **Acceptance Criteria**\n\n* We are able to add tokens where the onchain identifiers have specific nomenclature\n\n# **Dependencies**\n\n* FE help",
+          "estimate": null,
+          "id": "1a322b8d-2f37-4977-a469-e282f5089c71",
+          "identifier": "PROC-3804",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#eb5757",
+                "id": "bcff8ecc-d7a8-4ce7-9a4d-945280622277",
+                "name": "Bug"
+              },
+              {
+                "color": "#4cb782",
+                "id": "e48494d7-66c5-4c8b-996b-3780172586ed",
+                "name": "Good First Issue"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 4,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Unable to add tokens because validation fails for some onchain identifiers",
+          "updatedAt": "2026-02-04T14:36:18.796Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3804/unable-to-add-tokens-because-validation-fails-for-some-onchain"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-21T16:11:25.392Z",
+          "creator": {
+            "email": "wembley.leach@anchorlabs.com",
+            "name": "Wembley Leach"
+          },
+          "description": "When an asset is enabled via Asset Xpress, link the operation that enabled it in the asset express page. This will provide details about who, when, and what asset was enabled.",
+          "estimate": null,
+          "id": "8267377b-4393-48f6-bbfd-6b92e2461063",
+          "identifier": "PROC-3784",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#eb5757",
+                "id": "79f260f1-65de-4653-9658-354fa330668a",
+                "name": "Postmortem Action Item"
+              },
+              {
+                "color": "#f2994a",
+                "id": "a5d9908f-de41-45d3-8163-5b71c71cdb17",
+                "name": "CandidateToDelete"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "[INC-3993] Asset Xpress status toggle notification",
+          "updatedAt": "2026-01-21T14:50:59.749Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3784/inc-3993-asset-xpress-status-toggle-notification"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-21T15:56:34.480Z",
+          "creator": {
+            "email": "wembley.leach@anchorlabs.com",
+            "name": "Wembley Leach"
+          },
+          "description": "When an asset can't be loaded from the [assetTypes map](https://github.com/anchorlabsinc/anchorage/blob/011a3ad767d684e93dbd8688aadd880c10eb4e49/source/go/lib/assettype/info.go#L552-L556) an error is returned, but there's no associated alerting associated with it. It's up to the caller to handle the error (e.g. log the error or continue propagating it). This is one of the main reasons contributing to the Zepta asset resulting in the iOS apps, back-office dashboard, and API going down.\n\nCreate an alert that will page on-call, and send a message in slack, when an asset lookup fails.",
+          "estimate": null,
+          "id": "e181f3de-4a00-4520-9fe9-c5d4bc1cb660",
+          "identifier": "PROC-3783",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#eb5757",
+                "id": "79f260f1-65de-4653-9658-354fa330668a",
+                "name": "Postmortem Action Item"
+              },
+              {
+                "color": "#f2994a",
+                "id": "a5d9908f-de41-45d3-8163-5b71c71cdb17",
+                "name": "CandidateToDelete"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Triage",
+            "type": "triage"
+          },
+          "title": "[INC-3993] Create a paging alert for when an asset lookup in the assetTypes map fails in production.",
+          "updatedAt": "2026-01-21T14:50:27.266Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3783/inc-3993-create-a-paging-alert-for-when-an-asset-lookup-in-the"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-12T21:22:12.656Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "At the moment this file starts generating some doubts… and makes sense because it is confusing when we enable an asset but we have this code layer that applies even more logic. We need to investigate and understand what we can do.\n\nExample: [https://anchorinc.slack.com/archives/C06HL209VFB/p1754922245366369](https://anchorinc.slack.com/archives/C06HL209VFB/p1754922245366369)",
+          "estimate": null,
+          "id": "c87973fa-6da3-415b-878d-b3980ee177e2",
+          "identifier": "PROC-3732",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Investigate what can we do related to the stddisable.go file",
+          "updatedAt": "2025-11-14T10:34:00.254Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3732/investigate-what-can-we-do-related-to-the-stddisablego-file"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:41:39.482Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Suggestions:\n\n* link to the asset support special org\n* link to the add asset support documentation\n* link to the enablement documentation",
+          "estimate": null,
+          "id": "5614ee11-19e7-4cab-bd05-b256654e2654",
+          "identifier": "PROC-3719",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Canceled",
+            "type": "canceled"
+          },
+          "title": "Add useful links at the top of the page",
+          "updatedAt": "2025-11-13T13:00:22.135Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3719/add-useful-links-at-the-top-of-the-page"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:40:13.045Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "d25add80-b0c5-4a34-936a-30d4e4672b2e",
+          "identifier": "PROC-3718",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "In case of dynamic assets, add a link to the operation that originated it",
+          "updatedAt": "2025-11-14T10:33:21.168Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3718/in-case-of-dynamic-assets-add-a-link-to-the-operation-that-originated"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:40:05.615Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "ffd7a696-caa4-4792-9263-30b33ec2afcc",
+          "identifier": "PROC-3717",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Show information about the asset",
+          "updatedAt": "2026-02-28T11:03:28.582Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3717/show-information-about-the-asset"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:38:15.278Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "dee70f1c-cf96-476b-a5ac-5597cb0dc6d8",
+          "identifier": "PROC-3716",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Verify if the Asset Id or the Contract Address already exists",
+          "updatedAt": "2025-11-14T10:32:26.187Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3716/verify-if-the-asset-id-or-the-contract-address-already-exists"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:38:07.691Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "May this can help: [https://anchorinc.slack.com/archives/C08AG2X4UFM/p1765999853076729](https://anchorinc.slack.com/archives/C08AG2X4UFM/p1765999853076729)",
+          "estimate": null,
+          "id": "480d2197-39d6-439a-9347-d18635bc1e1b",
+          "identifier": "PROC-3715",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Automatically generate the suffix based on the network selected",
+          "updatedAt": "2026-01-14T12:01:54.616Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3715/automatically-generate-the-suffix-based-on-the-network-selected"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:38:01.961Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "46db8733-704c-4e98-bccd-b05540b61d46",
+          "identifier": "PROC-3714",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Filter only by the networks that are available and can be used to xpress",
+          "updatedAt": "2025-11-14T10:32:03.881Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3714/filter-only-by-the-networks-that-are-available-and-can-be-used-to"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:36:10.516Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "b0f1ada7-9f67-4429-8567-d7d2165b5f56",
+          "identifier": "PROC-3713",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Show the information when at least one org is enabled not only for entities",
+          "updatedAt": "2025-11-14T10:31:51.494Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3713/show-the-information-when-at-least-one-org-is-enabled-not-only-for"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:35:42.919Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": null,
+          "estimate": null,
+          "id": "e630e578-bfbb-457a-ac19-2ff9ff74846e",
+          "identifier": "PROC-3712",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Filters to the Asset Xpress page (by Network, by non-Native)",
+          "updatedAt": "2025-11-14T10:31:43.672Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3712/filters-to-the-asset-xpress-page-by-network-by-non-native"
+        },
+        {
+          "assignee": {
+            "email": "bruno.vilar@anchorlabs.com",
+            "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+            "name": "Bruno Vilar"
+          },
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:35:36.188Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "The page lists all the assets, and allows enablement to any kind of assets, not only the xpress ones. The current naming can lead to wrong assumptions.\n\n\"**Assets**\" is my suggestion for the menu and breadcrumb. The Title of the page: \"**List of Assets\"**\n\n![Screenshot 2025-11-10 10.48.12 AM.png](https://uploads.linear.app/e70de580-dbcb-4d45-a658-6654ba960c03/a2d10da0-05a2-4485-ab20-1b5c2c4575d8/440dcc71-ae73-4345-bc4d-65b0f08f0d3f)\n\n## Acceptance Criteria\n\n* FE doesn't show Xpress naming in the backoffice",
+          "estimate": null,
+          "id": "ea0a31bd-d13b-4a51-bd14-8821f4d9aa12",
+          "identifier": "PROC-3711",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#4cb782",
+                "id": "e48494d7-66c5-4c8b-996b-3780172586ed",
+                "name": "Good First Issue"
+              },
+              {
+                "color": "#26b5ce",
+                "id": "c5babead-32ac-4a7c-82dd-c27e1fe8255d",
+                "name": "Frontend"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Rename the Asset Xpress page title to remove the Xpress word",
+          "updatedAt": "2026-02-04T14:34:28.832Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3711/rename-the-asset-xpress-page-title-to-remove-the-xpress-word"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:29:36.403Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now, that we are moving away from a global env var, we should identify and understand what are the steps to get rid of the ANCHOR_ASSET_TYPES_ENABLED as a global identifier of the enabled assets/networks\n\nAlso, look into related env vars like: DEFAULT_ORG_ASSET_TYPES_ENABLED, ANCHOR_ADS_DEFAULT_ORG_ASSET_TYPES_ENABLED or ANCHOR_PORTO_DEFAULT_ORG_ASSET_TYPES_ENABLED\n\n## Acceptance Criteria\n\n* Identify the tasks that we need to accomplish to solve the problem",
+          "estimate": null,
+          "id": "6a9abe64-ed84-469c-a739-3bfde80ffbc1",
+          "identifier": "PROC-3710",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Identify the changes we need to do related to `ANCHOR_ASSET_TYPES_ENABLED`",
+          "updatedAt": "2025-11-13T13:00:21.302Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3710/identify-the-changes-we-need-to-do-related-to-anchor-asset-types"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:13:49.852Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now that asset enablement is managed without the need of `assets.cue` and that file only manages the edge nodes deployments we should update the documentation to reflect that. Also we should create new documentation if needed.\n\n## Acceptance criteria\n\n* No more mentions to the `assets.cue` when related to asset enablement\n  * Make sure we delete these references so that AIs and humans don't get info about it\n    * Archive might work if it doesn't show up in search or AI results\n* Update notion documentation",
+          "estimate": null,
+          "id": "7ff4ca5f-6624-4cef-9a24-4ddadf286a27",
+          "identifier": "PROC-3709",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Update asset enablement documentation",
+          "updatedAt": "2026-03-02T15:43:11.340Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3709/update-asset-enablement-documentation"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-08-06T15:03:54.960Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now, that we only use the `ANCHOR_ASSET_TYPES_ENABLED` at production level to manage native assets/networks we can rename and make everything more network related instead of think of it as a source for the required network.\n\n* rename the env variable from asset to network\n  * Suggestions\n    * `ANCHOR_REGISTERED_NETWORKS`\n    * `ANCHOR_SUPPORTED_NETWORKS`\n    * Ask Claude for better naming options\n* change the ids to a network id\n  * example: ETH_R -\u003e ETHEREUM_REGNET\n* change the asset registry code to handle directly the networks instead of converting assets into it (eg. logic_v2.go)\n\n⚠️ this task should not handle changes to the environment variable used for tests purposes\n\n## Acceptance Criteria\n\n* No more references to enablement, it's about available networks\n* Similar purpose, different env variable name\n* Should help make it clear what is happening with this\n* Update Notion with the new variable and as part of [PROC-3709](https://linear.app/anchorlabs/issue/PROC-3709/update-asset-enablement-documentation) ",
+          "estimate": null,
+          "id": "f94c7369-2e03-4e70-9c49-e85b5d527ca4",
+          "identifier": "PROC-3708",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Rename and update the `ANCHOR_ASSET_TYPES_ENABLED` to be network related",
+          "updatedAt": "2026-03-02T15:44:44.058Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3708/rename-and-update-the-anchor-asset-types-enabled-to-be-network-related"
+        },
+        {
+          "assignee": {
+            "email": "prasanna@anchorlabs.com",
+            "id": "cb5a8155-5fd4-47be-871a-b94c726df7cf",
+            "name": "Prasanna Gautam"
+          },
+          "children": {
+            "nodes": []
+          },
+          "completedAt": "2026-01-20T22:27:25.982Z",
+          "createdAt": "2025-08-06T14:18:16.985Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "# Description\n\nWe should search and remove any reference that we have to assets.cue in our code base\n\n# **Acceptance Criteria**\n\n* No more references to assets.cue",
+          "estimate": null,
+          "id": "f7584fd8-7967-48d0-acf8-5684711fc732",
+          "identifier": "PROC-3707",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Done",
+            "type": "completed"
+          },
+          "title": "Remove any references to assets.cue (code)",
+          "updatedAt": "2026-01-20T22:27:25.998Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3707/remove-any-references-to-assetscue-code"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-05-15T11:15:33.846Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now that we have visibility of what we need to create to make possible decoupling the read endpoints from the current implementation, we need to create a package that is able to provide the asset/network/blockchain information as a service requirement.\n\nSo in the end we have the API to be able to register new \u003casset/network/blockchain\u003e and get \u003casset/network/blockchain\u003e.\n\nExamples:\n\n* GetInfo\n* GetNetwork\n* ParseId\n* ListAssets\n\nWe also need to evaluate if we can do this already at the asset registry level.\n\n# Acceptance Criteria\n\n* We have an interface that we can use as a replacement for what we already have",
+          "estimate": 2,
+          "id": "c801b729-16a4-4db4-bd05-abfd88bd44cd",
+          "identifier": "PROC-3500",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#26b5ce",
+                "id": "361fdbfb-ea46-45cf-908b-f6dc271ee2db",
+                "name": "Backend"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Mimic Network read endpoints to a separated registry/client package",
+          "updatedAt": "2025-11-13T13:02:13.116Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3500/mimic-network-read-endpoints-to-a-separated-registryclient-package"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-05-15T11:13:19.554Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "Now that we have visibility of what we need to create to make possible decoupling the register endpoints from the current implementation, we need to create a package that is able to provide the asset/network/blockchain information as a service requirement.\n\nSo in the end we have the API to be able to register new \u003casset/network/blockchain\u003e and get \u003casset/network/blockchain\u003e.\n\nExamples:\n\n* GetInfo\n* GetNetwork\n* ParseId\n* ListAssets\n\n# Acceptance Criteria\n\n* We have an interface that we can use as a replacement for what we already have",
+          "estimate": 2,
+          "id": "1d38f114-b3e5-4023-8728-61fa0a22bf45",
+          "identifier": "PROC-3499",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#26b5ce",
+                "id": "361fdbfb-ea46-45cf-908b-f6dc271ee2db",
+                "name": "Backend"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Mimic Blockchain read methods to a separated registry/client package",
+          "updatedAt": "2025-11-13T13:02:17.613Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3499/mimic-blockchain-read-methods-to-a-separated-registryclient-package"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-05-08T14:35:21.965Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "# Description\n\nThe Remote Fetcher refresh cron is always registering assets independently if the asset is already in the global state map, so we need to include a validation to cases where we try to update an asset where the network and token type mismatch between what already exists.\n\nThis was an existing validation before the Update Asset Support operation, but was removed to handle the updates.\n\nIn the `validate()` function (`source/go/lib/assettype/info.go`) include the assetTypeID already registered error but include the network and token type in the check.\n\n# **Acceptance Criteria**\n\n* While we are registering assets though xpress we are able to know if we have the same asset type id mismatch",
+          "estimate": 2,
+          "id": "c88ea780-eb76-40c3-a04c-2466a47841f6",
+          "identifier": "PROC-3485",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#ff0000",
+                "id": "edc544bc-0289-4d92-8412-a377f05f5575",
+                "name": "Incident"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Verify duplicated assets while doing remote fetcher registration",
+          "updatedAt": "2025-11-18T03:51:45.400Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3485/verify-duplicated-assets-while-doing-remote-fetcher-registration"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-04-18T15:07:48.646Z",
+          "creator": {
+            "email": "joao.pinho@anchorlabs.com",
+            "name": "Joao Pinho"
+          },
+          "description": "# Description\n\nSmoke test has been disabled because of missed expectations while we are migrating assets to a different special organization.\n\nEnable this test when migration complete\n\n# **Acceptance Criteria**\n\nList the criteria that will be used to evaluate if this functionality is complete\n\n* Test is enabled and passing",
+          "estimate": 1,
+          "id": "1a70cfa3-f367-459f-9b8f-98c174240aed",
+          "identifier": "PROC-3378",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#f2994a",
+                "id": "a5d9908f-de41-45d3-8163-5b71c71cdb17",
+                "name": "CandidateToDelete"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Backlog",
+            "type": "backlog"
+          },
+          "title": "Enable Execute Asset Support Operation Smoke Test",
+          "updatedAt": "2025-11-13T13:03:56.647Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3378/enable-execute-asset-support-operation-smoke-test"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-03-05T20:40:59.480Z",
+          "creator": {
+            "email": "andre.correia@anchorlabs.com",
+            "name": "André Correia"
+          },
+          "description": "# Description\n\nDue to the high amount of data we can think about move org overrides and entities information to a resolver avoiding returning a streaming response.\n\n# **Acceptance Criteria**",
+          "estimate": null,
+          "id": "0fc5dad9-f64b-477c-8755-ae871d0f4f1b",
+          "identifier": "PROC-3192",
+          "labels": {
+            "nodes": []
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "Get enablement info GraphQL to return entities and orgs overrides as resolvers",
+          "updatedAt": "2025-11-14T10:33:31.065Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-3192/get-enablement-info-graphql-to-return-entities-and-orgs-overrides-as"
+        },
+        {
+          "assignee": null,
+          "children": {
+            "nodes": []
+          },
+          "completedAt": null,
+          "createdAt": "2025-01-08T17:36:09.169Z",
+          "creator": {
+            "email": "joao.brito@anchorlabs.com",
+            "name": "João Brito"
+          },
+          "description": "# Description\n\nWe made an unsuccessful attempt to enable asset type validation when adding a trusted destination. However, the validation was implemented in the wrong location, which shares the same code execution flow as `signed_organization_parse`. This causes conflicts, leading to [this issue](https://www.notion.so/anchorage/ERC20-Xpress-Special-Org-1595b28f309180048e4df21b6a7b68cc#1595b28f309180b3ae55d6a51446810c).\n\nTherefore, we need to add the validation to `trusted_destination_add_t::apply`. After applying this change, we should remove the redundant backend check that prevents adding a trusted destination to the \"special org.\" We must then test to ensure the environment remains stable.\n\n# **Acceptance Criteria**\n\n* The asset type validation is added to the trusted destination add\n* We deploy a local environment, disable the backend check, and verify that everything continues to function correctly after adding the trusted destination to the special org.\n\n# **Dependencies**\n\nHSM",
+          "estimate": null,
+          "id": "94e3c8f2-a393-4557-aa02-eeeccac65bbf",
+          "identifier": "PROC-2746",
+          "labels": {
+            "nodes": [
+              {
+                "color": "#26b5ce",
+                "id": "cf190fb7-6fb0-4c93-b7a2-ac86912cffc2",
+                "name": "HSM"
+              },
+              {
+                "color": "#f2994a",
+                "id": "a5d9908f-de41-45d3-8163-5b71c71cdb17",
+                "name": "CandidateToDelete"
+              }
+            ]
+          },
+          "parent": null,
+          "priority": 0,
+          "state": {
+            "name": "Planning Only",
+            "type": "backlog"
+          },
+          "title": "[HSM] Ensure asset_type is validated when executing a Add Trusted Destination org change",
+          "updatedAt": "2025-11-14T10:34:22.594Z",
+          "url": "https://linear.app/anchorlabs/issue/PROC-2746/hsm-ensure-asset-type-is-validated-when-executing-a-add-trusted"
+        }
+      ]
+    },
+    "lead": {
+      "email": "jose.sousa@anchorlabs.com",
+      "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+      "name": "José Sousa"
+    },
+    "members": {
+      "nodes": [
+        {
+          "email": "bruno.vilar@anchorlabs.com",
+          "id": "1f55e232-7a7c-4a69-b3ee-8a1abc637d85",
+          "name": "Bruno Vilar"
+        },
+        {
+          "email": "wil.wade@anchorlabs.com",
+          "id": "a61fde4c-c98f-497b-b5f8-fe7a2722e8d7",
+          "name": "Wil Wade"
+        },
+        {
+          "email": "jose.sousa@anchorlabs.com",
+          "id": "6be7e9a5-faa6-43c6-8465-758b9d2a0764",
+          "name": "José Sousa"
+        },
+        {
+          "email": "andre.correia@anchorlabs.com",
+          "id": "fbb60f46-7fc9-4157-b0b5-9b8909a3b0da",
+          "name": "André Correia"
+        }
+      ]
+    },
+    "name": "Asset Registry",
+    "progress": 0.02403846153846154,
+    "startDate": "2026-03-02",
+    "state": "started",
+    "targetDate": "2026-03-31",
+    "teams": {
+      "nodes": [
+        {
+          "id": "1a2d0221-4a6e-490b-838f-7d80d3197318",
+          "key": "PROC",
+          "name": "Protocols C"
+        }
+      ]
+    },
+    "url": "https://linear.app/anchorlabs/project/asset-registry-1c62eb6f727d"
+  }
+}
